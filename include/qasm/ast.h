@@ -134,10 +134,10 @@ class Context {
         hash_ident_uptr val_;
     };
 
-    std::vector<Environment> env_{}; ///< environment stack
-    std::list<idx> qubit_pool_{};    ///< pool of unassigned physical qubits
-    idx max_bit_ = -1;               ///< largest classical bit index
-    idx max_qubit_ = -1;             ///< largest (virtual) qubit index
+    std::vector<Environment> env_{};     ///< environment stack
+    std::list<idx> qubit_pool_{};        ///< pool of unassigned physical qubits
+    idx max_bit_ = static_cast<idx>(-1); ///< largest classical bit index
+    idx max_qubit_ = static_cast<idx>(-1); ///< largest (virtual) qubit index
 
     // For controlled contexts
     std::vector<idx> cctrls_{}; ///< classical controls in the current context
