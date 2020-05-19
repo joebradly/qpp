@@ -990,18 +990,18 @@ class UGate final : public Gate {
 
         // standard QASM spec, as defined in
         // https://arxiv.org/pdf/1707.03429.pdf
-        // u << cos(theta / 2) * std::exp(-1_i * (phi + lambda) / 2.0),
-        //     -(sin(theta / 2)) * std::exp(-1_i * (phi - lambda) / 2.0),
-        //     sin(theta / 2) * std::exp(1_i * (phi - lambda) / 2.0),
-        //     cos(theta / 2) * std::exp(1_i * (phi + lambda) / 2.0);
+        // u << std::cos(theta / 2) * std::exp(-1_i * (phi + lambda) / 2.0),
+        //     -(std::sin(theta / 2)) * std::exp(-1_i * (phi - lambda) / 2.0),
+        //     std::sin(theta / 2) * std::exp(1_i * (phi - lambda) / 2.0),
+        //     std::cos(theta / 2) * std::exp(1_i * (phi + lambda) / 2.0);
 
         // Qiskit spec, as defined in
         // https://github.com/Qiskit/qiskit-terra/tree/master/qiskit/extensions/standard
         // We use these definitions, see
         // https://github.com/vsoftco/qpp/issues/65 for the reasons why.
-        u << cos(theta / 2), -(sin(theta / 2)) * std::exp(1_i * lambda),
-            sin(theta / 2) * std::exp(1_i * phi),
-            cos(theta / 2) * std::exp(1_i * (phi + lambda));
+        u << std::cos(theta / 2), -(std::sin(theta / 2)) * std::exp(1_i * lambda),
+            std::sin(theta / 2) * std::exp(1_i * phi),
+            std::cos(theta / 2) * std::exp(1_i * (phi + lambda));
 
         // apply the gate
         for (auto i : args) {
@@ -1550,17 +1550,17 @@ class UExpr final : public Expr {
             case UnaryOp::Neg:
                 return -val;
             case UnaryOp::Sin:
-                return sin(val);
+                return std::sin(val);
             case UnaryOp::Cos:
-                return cos(val);
+                return std::cos(val);
             case UnaryOp::Tan:
-                return tan(val);
+                return std::tan(val);
             case UnaryOp::Ln:
-                return log(val);
+                return std::log(val);
             case UnaryOp::Sqrt:
-                return sqrt(val);
+                return std::sqrt(val);
             case UnaryOp::Exp:
-                return exp(val);
+                return std::exp(val);
             default:
                 return 0;
         }

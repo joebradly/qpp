@@ -1963,7 +1963,7 @@ dyn_mat<typename Derived::Scalar> applyQFT(const Eigen::MatrixBase<Derived>& A,
             for (idx j = 2; j <= n_subsys - i; ++j) {
                 // construct Rj
                 cmat Rj(2, 2);
-                Rj << 1, 0, 0, exp(2.0 * pi * 1_i / std::pow(2, j));
+                Rj << 1, 0, 0, std::exp(2.0 * pi * 1_i / std::pow(2, j));
                 result =
                     applyCTRL(result, Rj, {target[i + j - 1]}, {target[i]});
             }
@@ -1985,7 +1985,7 @@ dyn_mat<typename Derived::Scalar> applyQFT(const Eigen::MatrixBase<Derived>& A,
                 // construct Rj
                 cmat Rj = cmat::Zero(d, d);
                 for (idx m = 0; m < d; ++m) {
-                    Rj(m, m) = exp(2.0 * pi * m * 1_i / std::pow(d, j));
+                    Rj(m, m) = std::exp(2.0 * pi * m * 1_i / std::pow(d, j));
                 }
                 result =
                     applyCTRL(result, Rj, {target[i + j - 1]}, {target[i]}, d);
@@ -2069,7 +2069,7 @@ dyn_mat<typename Derived::Scalar> applyTFQ(const Eigen::MatrixBase<Derived>& A,
             for (idx j = n_subsys - i + 1; j-- > 2;) {
                 // construct Rj
                 cmat Rj(2, 2);
-                Rj << 1, 0, 0, exp(-2.0 * pi * 1_i / std::pow(2, j));
+                Rj << 1, 0, 0, std::exp(-2.0 * pi * 1_i / std::pow(2, j));
                 result =
                     applyCTRL(result, Rj, {target[i + j - 1]}, {target[i]});
             }
@@ -2090,7 +2090,7 @@ dyn_mat<typename Derived::Scalar> applyTFQ(const Eigen::MatrixBase<Derived>& A,
                 // construct Rj
                 cmat Rj = cmat::Zero(d, d);
                 for (idx m = 0; m < d; ++m) {
-                    Rj(m, m) = exp(-2.0 * pi * m * 1_i / std::pow(d, j));
+                    Rj(m, m) = std::exp(-2.0 * pi * m * 1_i / std::pow(d, j));
                 }
                 result =
                     applyCTRL(result, Rj, {target[i + j - 1]}, {target[i]}, d);
