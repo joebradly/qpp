@@ -1747,7 +1747,8 @@ class QCircuit : public IDisplay, public IJSON {
                     // construct Rj
                     cmat Rj = cmat::Zero(d_, d_);
                     for (idx m = 0; m < d_; ++m) {
-                        Rj(m, m) = std::exp(2.0 * pi * m * 1_i / std::pow(d_, j));
+                        Rj(m, m) =
+                            std::exp(2.0 * pi * m * 1_i / std::pow(d_, j));
                     }
                     CTRL(Rj, target[i + j - 1], target[i], {},
                          "CTRL-R" + std::to_string(j) + "d");
@@ -1857,7 +1858,8 @@ class QCircuit : public IDisplay, public IJSON {
                     // construct Rj
                     cmat Rj = cmat::Zero(d_, d_);
                     for (idx m = 0; m < d_; ++m) {
-                        Rj(m, m) = std::exp(-2.0 * pi * m * 1_i / std::pow(d_, j));
+                        Rj(m, m) =
+                            std::exp(-2.0 * pi * m * 1_i / std::pow(d_, j));
                     }
                     CTRL(Rj, target[i + j - 1], target[i], {},
                          "CTRL-R" + std::to_string(j) + "d+");
