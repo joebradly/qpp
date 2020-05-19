@@ -361,7 +361,7 @@ void variadic_vector_emplace(std::vector<T>& v, First&& first, Args&&... args) {
 }
 
 // returns the number of subsystems (each subsystem assumed of the same
-// dimension d) from an object (ket/bra/density matrix) of size D
+// dimension d) from an object (ket/bra/matrix) of size D
 inline idx get_num_subsys(idx D, idx d) {
     // error checks only in DEBUG version
     assert(D > 0);
@@ -371,8 +371,8 @@ inline idx get_num_subsys(idx D, idx d) {
 }
 
 // returns the dimension of a subsystem (each subsystem assumed of the same
-// dimension d) from an object (ket/bra/density matrix) of size sz consisting
-// of N subsystems
+// dimension d) from an object (ket/bra/matrix) of size sz consisting of N
+// subsystems
 inline idx get_dim_subsys(idx sz, idx N) {
     // error checks only in DEBUG version
     assert(N > 0);
