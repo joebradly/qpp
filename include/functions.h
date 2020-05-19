@@ -575,7 +575,9 @@ cmat svdV(const Eigen::MatrixBase<Derived>& A) {
 /**
  * \brief Functional calculus f(A)
  *
- * \param A Eigen expression
+ * \note Does not take into account issues such as numerical stability etc.
+ *
+ * \param A Diagonalizable Eigen expression
  * \param f Pointer-to-function from complex to complex
  * \return \a \f$f(A)\f$
  */
@@ -756,7 +758,7 @@ cmat cosm(const Eigen::MatrixBase<Derived>& A) {
  * Uses the spectral decomposition of \a A to compute the matrix power. By
  * convention \f$A^0 = I\f$.
  *
- * \param A Eigen expression
+ * \param A Diagonalizable Eigen expression
  * \param z Complex number
  * \return Matrix power \f$A^z\f$
  */
