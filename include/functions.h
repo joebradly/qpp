@@ -1422,6 +1422,8 @@ inline std::vector<idx> n2multiidx(idx n, const std::vector<idx>& dims) {
 inline idx multiidx2n(const std::vector<idx>& midx,
                       const std::vector<idx>& dims) {
     // EXCEPTION CHECKS
+    if(midx.size() != dims.size())
+        throw exception::SizeMismatch("qpp::multiidx2n()");
 
     if (!internal::check_dims(dims))
         throw exception::DimsInvalid("qpp::multiidx2n()");
