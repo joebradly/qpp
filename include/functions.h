@@ -799,8 +799,8 @@ cmat spectralpowm(const Eigen::MatrixBase<Derived>& A, const cplx z) {
  *
  * \param A Eigen expression
  * \param n Non-negative integer
- * \return Matrix power \f$A^n\f$, as a dynamic matrix
- * over the same scalar field as \a A
+ * \return Matrix power \f$A^n\f$, as a dynamic matrix over the same scalar
+ * field as \a A
  */
 template <typename Derived>
 dyn_mat<typename Derived::Scalar> powm(const Eigen::MatrixBase<Derived>& A,
