@@ -148,7 +148,7 @@ template <typename Derived>
 bool check_dims_match_mat(const std::vector<idx>& dims,
                           const Eigen::MatrixBase<Derived>& A) {
     // error checks only in DEBUG version
-    assert(dims.size() > 0);
+    assert(!dims.empty());
     assert(A.rows() == A.cols());
 
     idx proddim = std::accumulate(std::begin(dims), std::end(dims),
@@ -162,7 +162,7 @@ template <typename Derived>
 bool check_dims_match_cvect(const std::vector<idx>& dims,
                             const Eigen::MatrixBase<Derived>& A) {
     // error checks only in DEBUG version
-    assert(dims.size() > 0);
+    assert(!dims.empty());
     assert(A.rows() > 0);
     assert(A.cols() == 1);
 
@@ -177,7 +177,7 @@ template <typename Derived>
 bool check_dims_match_rvect(const std::vector<idx>& dims,
                             const Eigen::MatrixBase<Derived>& A) {
     // error checks only in DEBUG version
-    assert(dims.size() > 0);
+    assert(!dims.empty());
     assert(A.cols() > 0);
     assert(A.rows() == 1);
 
@@ -191,7 +191,7 @@ bool check_dims_match_rvect(const std::vector<idx>& dims,
 // check that all elements in valid dims equal to dim
 inline bool check_eq_dims(const std::vector<idx>& dims, idx dim) noexcept {
     // error checks only in DEBUG version
-    assert(dims.size() > 0);
+    assert(!dims.empty());
 
     for (idx i : dims)
         if (i != dim)

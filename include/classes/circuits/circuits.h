@@ -469,8 +469,8 @@ class QCircuit : public IDisplay, public IJSON {
      *
      * \return Hash table with the matrices used in the circuit
      */
-    const std::unordered_map<std::size_t, cmat>&
-    get_cmat_hash_tbl_() const noexcept {
+    const std::unordered_map<std::size_t, cmat>& get_cmat_hash_tbl_() const
+        noexcept {
         return cmat_hash_tbl_;
     }
 
@@ -3376,7 +3376,7 @@ class QCircuit : public IDisplay, public IJSON {
     QCircuit& adjoint() {
         // EXCEPTION CHECKS
 
-        if (get_measured().size() > 0)
+        if (!get_measured().empty())
             throw exception::QuditAlreadyMeasured("qpp::QCircuit()::adjoint()");
         // END EXCEPTION CHECKS
 
@@ -3809,7 +3809,7 @@ class QCircuit : public IDisplay, public IJSON {
     friend QCircuit adjoint(QCircuit qc) {
         // EXCEPTION CHECKS
 
-        if (qc.get_measured().size() > 0)
+        if (!qc.get_measured().empty())
             throw exception::QuditAlreadyMeasured("qpp::adjoint()");
         // END EXCEPTION CHECKS
 

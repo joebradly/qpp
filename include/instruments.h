@@ -774,7 +774,7 @@ measure_seq(const Eigen::MatrixBase<Derived>& A, std::vector<idx> target,
     std::sort(std::begin(target), std::end(target), std::greater<idx>{});
 
     //************ density matrix or column vector ************//
-    while (target.size() > 0) {
+    while (!target.empty()) {
         auto tmp = measure(rA, Gates::get_instance().Id(dims[target[0]]),
                            {target[0]}, dims, destructive);
         result.emplace_back(std::get<0>(tmp));

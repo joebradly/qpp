@@ -101,7 +101,7 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
         throw exception::SubsysMismatchDims("qpp::applyCTRL()");
 
     // check that all control subsystems have the same dimension
-    idx d = ctrl.size() > 0 ? dims[ctrl[0]] : 1;
+    idx d = !ctrl.empty() ? dims[ctrl[0]] : 1;
     for (idx i = 1; i < ctrl.size(); ++i)
         if (dims[ctrl[i]] != d)
             throw exception::DimsNotEqual("qpp::applyCTRL()");

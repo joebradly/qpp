@@ -64,12 +64,12 @@ static std::unordered_map<ident,
         {"tdg", [](const std::vector<double>&) { return gt.T.adjoint(); }},
         {"rx",
          [](const std::vector<double>& args) {
-             assert(args.size() > 0);
+             assert(!args.empty());
              return gt.RX(args[0]);
          }},
         {"rz",
          [](const std::vector<double>& args) {
-             assert(args.size() > 0);
+             assert(!args.empty());
              // note the discrepancy; QISKIT defines it as diag(1, e^{i\phi})
              // we comply to the QISKIT definition (and not the OPENQASM
              // specs); see https://github.com/softwareQinc/qpp/issues/70
@@ -77,7 +77,7 @@ static std::unordered_map<ident,
          }},
         {"ry",
          [](const std::vector<double>& args) {
-             assert(args.size() > 0);
+             assert(!args.empty());
              return gt.RY(args[0]);
          }},
         {"cz", [](const std::vector<double>&) { return gt.CZ; }},
@@ -96,7 +96,7 @@ static std::unordered_map<ident,
          }},
         {"ccx", [](const std::vector<double>&) { return gt.TOF; }},
         {"crz", [](const std::vector<double>& args) {
-             assert(args.size() > 0);
+             assert(!args.empty());
              cmat mat{cmat::Identity(4, 4)};
              mat.block(2, 2, 2, 2) = gt.RZ(args[0]);
              return mat;
@@ -708,7 +708,7 @@ class GateDecl final : public Decl {
      */
     std::ostream& display(std::ostream& os) const {
         os << (opaque_ ? "opaque " : "gate ") << id_;
-        if (c_params_.size() > 0) {
+        if (!c_params_.empty()) {
             os << "(";
             for (auto it = c_params_.begin(); it != c_params_.end(); it++) {
                 os << (it == c_params_.begin() ? "" : ",") << *it;
@@ -738,7 +738,7 @@ class GateDecl final : public Decl {
     void pretty_print(std::ostream& os, const std::string& prefix) const {
         os << "(" << loc_ << "):" << prefix;
         os << (opaque_ ? "opaque " : "gate ") << id_;
-        if (c_params_.size() > 0) {
+        if (!c_params_.empty()) {
             os << "(";
             for (auto it = c_params_.begin(); it != c_params_.end(); it++) {
                 os << (it == c_params_.begin() ? "" : ",") << *it;
@@ -1291,7 +1291,7 @@ class DeclaredGate final : public Gate {
      */
     std::ostream& display(std::ostream& os) const {
         os << id_;
-        if (c_args_.size() > 0) {
+        if (!c_args_.empty()) {
             os << "(";
             for (auto it = c_args_.begin(); it != c_args_.end(); it++) {
                 os << (it == c_args_.begin() ? "" : ",") << **it;
