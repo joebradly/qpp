@@ -126,7 +126,7 @@ class Value {
 class Context {
     QCircuit* circuit_; ///< pointer to the accumulating circuit
 
-    // Hack for MSCV
+    // Hack for MSVC
     using hash_ident_uptr = std::unordered_map<ident, std::unique_ptr<Value>>;
     struct Environment {
         Environment() noexcept : val_(){};
