@@ -80,13 +80,6 @@ inline constexpr std::complex<float> operator"" _if(long double x) noexcept {
 constexpr double chop = 1e-14;
 
 /**
- * \brief Maximum number of allowed qubits/qudits (subsystems)
- *
- * Used internally to allocate arrays on the stack (for performance reasons):
- */
-constexpr idx maxn = 64; // maximum number of qubits/qudits a state may have
-
-/**
  * \brief \f$\pi\f$
  */
 constexpr double pi = 3.141592653589793238462643383279502884;
@@ -121,6 +114,15 @@ enum {
     PROB = 1, ///< Probabilit(y)/(ies)
     ST = 2,   ///< Output state(s)
 };
+
+namespace internal {
+/**
+ * \brief Maximum number of allowed qubits/qudits (subsystems)
+ *
+ * Used internally to allocate arrays on the stack (for performance reasons):
+ */
+constexpr idx maxn = 64; // maximum number of qubits/qudits a state may have
+} /* namespace internal */
 
 } /* namespace qpp */
 

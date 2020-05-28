@@ -97,11 +97,11 @@ ip(const Eigen::MatrixBase<Derived>& phi, const Eigen::MatrixBase<Derived>& psi,
     idx n_subsys = subsys.size();
     idx n_subsys_bar = n - n_subsys;
 
-    idx Cdims[maxn];
-    idx Csubsys[maxn];
-    idx Cdimssubsys[maxn];
-    idx Csubsys_bar[maxn];
-    idx Cdimssubsys_bar[maxn];
+    idx Cdims[internal::maxn];
+    idx Csubsys[internal::maxn];
+    idx Cdimssubsys[internal::maxn];
+    idx Csubsys_bar[internal::maxn];
+    idx Cdimssubsys_bar[internal::maxn];
 
     std::vector<idx> subsys_bar = complement(subsys, n);
     std::copy(std::begin(subsys_bar), std::end(subsys_bar),
@@ -119,9 +119,9 @@ ip(const Eigen::MatrixBase<Derived>& phi, const Eigen::MatrixBase<Derived>& psi,
     }
 
     auto worker = [&](idx b) noexcept->typename Derived::Scalar {
-        idx Cmidxrow[maxn];
-        idx Cmidxrowsubsys[maxn];
-        idx Cmidxcolsubsys_bar[maxn];
+        idx Cmidxrow[internal::maxn];
+        idx Cmidxrowsubsys[internal::maxn];
+        idx Cmidxcolsubsys_bar[internal::maxn];
 
         /* get the col multi-indexes of the complement */
         internal::n2multiidx(b, n_subsys_bar, Cdimssubsys_bar,

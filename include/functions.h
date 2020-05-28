@@ -1405,7 +1405,7 @@ inline std::vector<idx> n2multiidx(idx n, const std::vector<idx>& dims) {
     // END EXCEPTION CHECKS
 
     // double the size for matrices reshaped as vectors
-    idx result[2 * maxn];
+    idx result[2 * internal::maxn];
     internal::n2multiidx(n, dims.size(), dims.data(), result);
 
     return std::vector<idx>(result, result + dims.size());

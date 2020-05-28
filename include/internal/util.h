@@ -77,7 +77,7 @@ inline idx multiidx2n(const idx* const midx, idx numdims,
 
     // Static allocation for speed!
     // double the size for matrices reshaped as vectors
-    idx part_prod[2 * maxn];
+    idx part_prod[2 * internal::maxn];
 
     idx result = 0;
     part_prod[numdims - 1] = 1;

@@ -159,10 +159,10 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
     idx Dctrl = static_cast<idx>(std::llround(std::pow(d, ctrlsize)));
     idx DA = static_cast<idx>(rA.rows()); // dimension of gate subsystem
 
-    idx Cdims[maxn];          // local dimensions
-    idx CdimsA[maxn];         // local dimensions
-    idx CdimsCTRL[maxn];      // local dimensions
-    idx CdimsCTRLA_bar[maxn]; // local dimensions
+    idx Cdims[internal::maxn];          // local dimensions
+    idx CdimsA[internal::maxn];         // local dimensions
+    idx CdimsCTRL[internal::maxn];      // local dimensions
+    idx CdimsCTRLA_bar[internal::maxn]; // local dimensions
 
     // compute the complementary subsystem of ctrlgate w.r.t. dims
     std::vector<idx> ctrlgate_bar = complement(ctrlgate, n);
@@ -189,9 +189,9 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
         idx indx = 0;
         typename Derived1::Scalar coeff = 0;
 
-        idx Cmidx[maxn];          // the total multi-index
-        idx CmidxA[maxn];         // the gate part multi-index
-        idx CmidxCTRLA_bar[maxn]; // the rest multi-index
+        idx Cmidx[internal::maxn];          // the total multi-index
+        idx CmidxA[internal::maxn];         // the gate part multi-index
+        idx CmidxCTRLA_bar[internal::maxn]; // the rest multi-index
 
         // compute the index
 
@@ -239,14 +239,14 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
         idx idxcol = 0;
         typename Derived1::Scalar coeff = 0, lhs = 1, rhs = 1;
 
-        idx Cmidxrow[maxn];          // the total row multi-index
-        idx Cmidxcol[maxn];          // the total col multi-index
-        idx CmidxArow[maxn];         // the gate part row multi-index
-        idx CmidxAcol[maxn];         // the gate part col multi-index
-        idx CmidxCTRLrow[maxn];      // the control row multi-index
-        idx CmidxCTRLcol[maxn];      // the control col multi-index
-        idx CmidxCTRLA_barrow[maxn]; // the rest row multi-index
-        idx CmidxCTRLA_barcol[maxn]; // the rest col multi-index
+        idx Cmidxrow[internal::maxn];          // the total row multi-index
+        idx Cmidxcol[internal::maxn];          // the total col multi-index
+        idx CmidxArow[internal::maxn];         // the gate part row multi-index
+        idx CmidxAcol[internal::maxn];         // the gate part col multi-index
+        idx CmidxCTRLrow[internal::maxn];      // the control row multi-index
+        idx CmidxCTRLcol[internal::maxn];      // the control col multi-index
+        idx CmidxCTRLA_barrow[internal::maxn]; // the rest row multi-index
+        idx CmidxCTRLA_barcol[internal::maxn]; // the rest col multi-index
 
         // compute the ket/bra indexes
 
@@ -1368,13 +1368,13 @@ dyn_mat<typename Derived::Scalar> ptrace(const Eigen::MatrixBase<Derived>& A,
         Dsubsys *= dims[target[i]];
     idx Dsubsys_bar = D / Dsubsys;
 
-    idx Cdims[maxn];
-    idx Csubsys[maxn];
-    idx Cdimssubsys[maxn];
-    idx Csubsys_bar[maxn];
-    idx Cdimssubsys_bar[maxn];
+    idx Cdims[internal::maxn];
+    idx Csubsys[internal::maxn];
+    idx Cdimssubsys[internal::maxn];
+    idx Csubsys_bar[internal::maxn];
+    idx Cdimssubsys_bar[internal::maxn];
 
-    idx Cmidxcolsubsys_bar[maxn];
+    idx Cmidxcolsubsys_bar[internal::maxn];
 
     std::vector<idx> subsys_bar = complement(target, n);
     std::copy(std::begin(subsys_bar), std::end(subsys_bar),
@@ -1407,10 +1407,10 @@ dyn_mat<typename Derived::Scalar> ptrace(const Eigen::MatrixBase<Derived>& A,
 
         auto worker = [&](idx i) noexcept->typename Derived::Scalar {
             // use static allocation for speed!
-            idx Cmidxrow[maxn];
-            idx Cmidxcol[maxn];
-            idx Cmidxrowsubsys_bar[maxn];
-            idx Cmidxsubsys[maxn];
+            idx Cmidxrow[internal::maxn];
+            idx Cmidxcol[internal::maxn];
+            idx Cmidxrowsubsys_bar[internal::maxn];
+            idx Cmidxsubsys[internal::maxn];
 
             /* get the row multi-indexes of the complement */
             internal::n2multiidx(i, n_subsys_bar, Cdimssubsys_bar,
@@ -1464,10 +1464,10 @@ dyn_mat<typename Derived::Scalar> ptrace(const Eigen::MatrixBase<Derived>& A,
 
         auto worker = [&](idx i) noexcept->typename Derived::Scalar {
             // use static allocation for speed!
-            idx Cmidxrow[maxn];
-            idx Cmidxcol[maxn];
-            idx Cmidxrowsubsys_bar[maxn];
-            idx Cmidxsubsys[maxn];
+            idx Cmidxrow[internal::maxn];
+            idx Cmidxcol[internal::maxn];
+            idx Cmidxrowsubsys_bar[internal::maxn];
+            idx Cmidxsubsys[internal::maxn];
 
             /* get the row/col multi-indexes of the complement */
             internal::n2multiidx(i, n_subsys_bar, Cdimssubsys_bar,
@@ -1596,9 +1596,9 @@ ptranspose(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& target,
     idx D = static_cast<idx>(rA.rows());
     idx n = dims.size();
     idx n_subsys = target.size();
-    idx Cdims[maxn];
-    idx Cmidxcol[maxn];
-    idx Csubsys[maxn];
+    idx Cdims[internal::maxn];
+    idx Cmidxcol[internal::maxn];
+    idx Csubsys[internal::maxn];
 
     // copy dims in Cdims and target in Csubsys
     for (idx i = 0; i < n; ++i)
@@ -1619,8 +1619,8 @@ ptranspose(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& target,
 
         auto worker = [&](idx i) noexcept->typename Derived::Scalar {
             // use static allocation for speed!
-            idx midxcoltmp[maxn];
-            idx midxrow[maxn];
+            idx midxcoltmp[internal::maxn];
+            idx midxrow[internal::maxn];
 
             for (idx k = 0; k < n; ++k)
                 midxcoltmp[k] = Cmidxcol[k];
@@ -1659,8 +1659,8 @@ ptranspose(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& target,
 
         auto worker = [&](idx i) noexcept->typename Derived::Scalar {
             // use static allocation for speed!
-            idx midxcoltmp[maxn];
-            idx midxrow[maxn];
+            idx midxcoltmp[internal::maxn];
+            idx midxrow[internal::maxn];
 
             for (idx k = 0; k < n; ++k)
                 midxcoltmp[k] = Cmidxcol[k];
@@ -1783,8 +1783,8 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
     //************ ket ************//
     if (internal::check_cvector(rA)) // we have a column vector
     {
-        idx Cdims[maxn];
-        idx Cperm[maxn];
+        idx Cdims[internal::maxn];
+        idx Cperm[internal::maxn];
 
         // copy dims in Cdims and perm in Cperm
         for (idx i = 0; i < n; ++i) {
@@ -1796,9 +1796,9 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
         auto worker = [&Cdims, &Cperm, n ](idx i) noexcept->idx {
             // use static allocation for speed,
             // double the size for matrices reshaped as vectors
-            idx midx[maxn];
-            idx midxtmp[maxn];
-            idx permdims[maxn];
+            idx midx[internal::maxn];
+            idx midxtmp[internal::maxn];
+            idx permdims[internal::maxn];
 
             /* compute the multi-index */
             internal::n2multiidx(i, n, Cdims, midx);
@@ -1821,8 +1821,8 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
     //************ density matrix ************//
     else // we have a density operator
     {
-        idx Cdims[2 * maxn];
-        idx Cperm[2 * maxn];
+        idx Cdims[2 * internal::maxn];
+        idx Cperm[2 * internal::maxn];
 
         // copy dims in Cdims and perm in Cperm
         for (idx i = 0; i < n; ++i) {
@@ -1840,9 +1840,9 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
         auto worker = [&Cdims, &Cperm, n ](idx i) noexcept->idx {
             // use static allocation for speed,
             // double the size for matrices reshaped as vectors
-            idx midx[2 * maxn];
-            idx midxtmp[2 * maxn];
-            idx permdims[2 * maxn];
+            idx midx[2 * internal::maxn];
+            idx midxtmp[2 * internal::maxn];
+            idx permdims[2 * internal::maxn];
 
             /* compute the multi-index */
             internal::n2multiidx(i, 2 * n, Cdims, midx);

@@ -438,17 +438,17 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
             shift = std::vector<idx>(ctrl.size(), 0);
 
         // Use static allocation for speed!
-        idx Cdims[maxn];
-        idx midx_row[maxn];
-        idx midx_col[maxn];
+        idx Cdims[internal::maxn];
+        idx midx_row[internal::maxn];
+        idx midx_col[internal::maxn];
 
-        idx CdimsA[maxn];
-        idx midxA_row[maxn];
-        idx midxA_col[maxn];
+        idx CdimsA[internal::maxn];
+        idx midxA_row[internal::maxn];
+        idx midxA_col[internal::maxn];
 
-        idx Cdims_bar[maxn];
-        idx Csubsys_bar[maxn];
-        idx midx_bar[maxn];
+        idx Cdims_bar[internal::maxn];
+        idx Csubsys_bar[internal::maxn];
+        idx midx_bar[internal::maxn];
 
         idx n_gate = target.size();
         idx n_ctrl = ctrl.size();
@@ -579,9 +579,9 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
         dyn_mat<typename Derived::Scalar> result =
             dyn_mat<typename Derived::Scalar>::Identity(D, D);
 
-        idx Cdims[maxn];
-        idx midx_row[maxn];
-        idx midx_col[maxn];
+        idx Cdims[internal::maxn];
+        idx midx_row[internal::maxn];
+        idx midx_col[internal::maxn];
 
         for (idx k = 0; k < dims.size(); ++k) {
             midx_row[k] = midx_col[k] = 0;
