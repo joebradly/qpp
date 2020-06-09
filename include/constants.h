@@ -119,9 +119,9 @@ namespace internal {
 /**
  * \brief Maximum number of allowed qubits/qudits (subsystems)
  *
- * Used internally to allocate arrays on the stack (for performance reasons):
+ * Used internally to allocate arrays on the stack (for performance reasons)
  */
-constexpr idx maxn = 64; // maximum number of qubits/qudits a state may have
+constexpr idx maxn = 64;
 } /* namespace internal */
 
 } /* namespace qpp */
