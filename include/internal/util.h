@@ -72,6 +72,7 @@ inline idx multiidx2n(const idx* const midx, idx numdims,
                       const idx* const dims) noexcept {
     // error checks only in DEBUG version
     assert(numdims > 0);
+    assert(numdims < internal::maxn);
 
     // no error checks in release version to improve speed
 
