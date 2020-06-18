@@ -32,6 +32,8 @@ int main() {
 
     cmat G = 2 * prj(psi) - gt.Id(N); // Diffusion operator
 
+    Timer<> t;
+
     // number of queries
     idx nqueries = std::ceil(pi / 4 * std::sqrt(N));
     std::cout << ">> We run " << nqueries << " queries\n";
@@ -40,8 +42,7 @@ int main() {
         psi = (G * psi).eval();     // then the diffusion operator, no aliasing
     }
 
-    // we now measure the state in the computational basis
-    // auto measured = measure(psi, gt.Id(N));
+    // we now measure the state in the computational basis, destructively
     auto measured = measure_seq(psi, subsys, dims);
     std::cout << ">> Probability of the marked state: "
               << std::get<PROB>(measured) << '\n';
@@ -55,4 +56,6 @@ int main() {
         std::cout << ">> Not there yet... we obtained: ";
     std::cout << multiidx2n(result, dims) << " -> ";
     std::cout << disp(result, " ") << '\n';
+
+    std::cout << ">> Run time: " << t.toc() << " seconds\n";
 }
