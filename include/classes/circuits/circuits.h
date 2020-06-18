@@ -469,8 +469,8 @@ class QCircuit : public IDisplay, public IJSON {
      *
      * \return Hash table with the matrices used in the circuit
      */
-    const std::unordered_map<std::size_t, cmat>& get_cmat_hash_tbl_() const
-        noexcept {
+    const std::unordered_map<std::size_t, cmat>&
+    get_cmat_hash_tbl_() const noexcept {
         return cmat_hash_tbl_;
     }
 

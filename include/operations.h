@@ -184,8 +184,9 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
 
     // worker, computes the coefficient and the index for the ket case
     // used in #pragma omp parallel for collapse
-    auto coeff_idx_ket = [&](idx i_, idx m_, idx r_) noexcept
-                             ->std::pair<typename Derived1::Scalar, idx> {
+    auto coeff_idx_ket =
+        [&](idx i_, idx m_,
+            idx r_) noexcept -> std::pair<typename Derived1::Scalar, idx> {
         idx indx = 0;
         typename Derived1::Scalar coeff = 0;
 
@@ -234,7 +235,7 @@ applyCTRL(const Eigen::MatrixBase<Derived1>& state,
     // used in #pragma omp parallel for collapse
     auto coeff_idx_rho = [&](idx i1_, idx m1_, idx r1_, idx i2_, idx m2_,
                              idx r2_) noexcept
-                             ->std::tuple<typename Derived1::Scalar, idx, idx> {
+        -> std::tuple<typename Derived1::Scalar, idx, idx> {
         idx idxrow = 0;
         idx idxcol = 0;
         typename Derived1::Scalar coeff = 0, lhs = 1, rhs = 1;
@@ -1112,7 +1113,7 @@ dyn_mat<typename Derived::Scalar> ptrace1(const Eigen::MatrixBase<Derived>& A,
         if (!internal::check_dims_match_cvect(dims, rA))
             throw exception::DimsMismatchCvector("qpp::ptrace1()");
 
-        auto worker = [&](idx i, idx j) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i, idx j) noexcept -> typename Derived::Scalar {
             typename Derived::Scalar sum = 0;
             for (idx m = 0; m < DA; ++m)
                 sum += rA(m * DB + i) * std::conj(rA(m * DB + j));
@@ -1136,7 +1137,7 @@ dyn_mat<typename Derived::Scalar> ptrace1(const Eigen::MatrixBase<Derived>& A,
         if (!internal::check_dims_match_mat(dims, rA))
             throw exception::DimsMismatchMatrix("qpp::ptrace1()");
 
-        auto worker = [&](idx i, idx j) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i, idx j) noexcept -> typename Derived::Scalar {
             typename Derived::Scalar sum = 0;
             for (idx m = 0; m < DA; ++m)
                 sum += rA(m * DB + i, m * DB + j);
@@ -1240,7 +1241,7 @@ dyn_mat<typename Derived::Scalar> ptrace2(const Eigen::MatrixBase<Derived>& A,
         if (!internal::check_dims_match_cvect(dims, rA))
             throw exception::DimsMismatchCvector("qpp::ptrace2()");
 
-        auto worker = [&](idx i, idx j) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i, idx j) noexcept -> typename Derived::Scalar {
             typename Derived::Scalar sum = 0;
             for (idx m = 0; m < DB; ++m)
                 sum += rA(i * DB + m) * std::conj(rA(j * DB + m));
@@ -1405,7 +1406,7 @@ dyn_mat<typename Derived::Scalar> ptrace(const Eigen::MatrixBase<Derived>& A,
         if (target.empty())
             return rA * adjoint(rA);
 
-        auto worker = [&](idx i) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i) noexcept -> typename Derived::Scalar {
             // use static allocation for speed!
             idx Cmidxrow[internal::maxn];
             idx Cmidxcol[internal::maxn];
@@ -1462,7 +1463,7 @@ dyn_mat<typename Derived::Scalar> ptrace(const Eigen::MatrixBase<Derived>& A,
         if (target.empty())
             return rA;
 
-        auto worker = [&](idx i) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i) noexcept -> typename Derived::Scalar {
             // use static allocation for speed!
             idx Cmidxrow[internal::maxn];
             idx Cmidxcol[internal::maxn];
@@ -1617,7 +1618,7 @@ ptranspose(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& target,
         if (target.empty())
             return rA * adjoint(rA);
 
-        auto worker = [&](idx i) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i) noexcept -> typename Derived::Scalar {
             // use static allocation for speed!
             idx midxcoltmp[internal::maxn];
             idx midxrow[internal::maxn];
@@ -1657,7 +1658,7 @@ ptranspose(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& target,
         if (target.empty())
             return rA;
 
-        auto worker = [&](idx i) noexcept->typename Derived::Scalar {
+        auto worker = [&](idx i) noexcept -> typename Derived::Scalar {
             // use static allocation for speed!
             idx midxcoltmp[internal::maxn];
             idx midxrow[internal::maxn];
@@ -1793,7 +1794,7 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
         }
         result.resize(D, 1);
 
-        auto worker = [&Cdims, &Cperm, n ](idx i) noexcept->idx {
+        auto worker = [&Cdims, &Cperm, n](idx i) noexcept -> idx {
             // use static allocation for speed,
             // double the size for matrices reshaped as vectors
             idx midx[internal::maxn];
@@ -1837,7 +1838,7 @@ syspermute(const Eigen::MatrixBase<Derived>& A, const std::vector<idx>& perm,
             Eigen::Map<dyn_mat<typename Derived::Scalar>>(
                 const_cast<typename Derived::Scalar*>(rA.data()), D * D, 1);
 
-        auto worker = [&Cdims, &Cperm, n ](idx i) noexcept->idx {
+        auto worker = [&Cdims, &Cperm, n](idx i) noexcept -> idx {
             // use static allocation for speed,
             // double the size for matrices reshaped as vectors
             idx midx[2 * internal::maxn];

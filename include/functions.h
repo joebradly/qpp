@@ -1396,7 +1396,7 @@ dyn_mat<typename Derived::Scalar> grams(const Eigen::MatrixBase<Derived>& A) {
 inline std::vector<idx> n2multiidx(idx n, const std::vector<idx>& dims) {
     // EXCEPTION CHECKS
 
-    if(dims.size() > internal::maxn)
+    if (dims.size() > internal::maxn)
         throw exception::OutOfRange("qpp::n2multiidx()");
 
     if (!internal::check_dims(dims)) {
@@ -1435,7 +1435,7 @@ inline idx multiidx2n(const std::vector<idx>& midx,
     if (!internal::check_dims(dims))
         throw exception::DimsInvalid("qpp::multiidx2n()");
 
-    if(dims.size() > internal::maxn)
+    if (dims.size() > internal::maxn)
         throw exception::OutOfRange("qpp::multiidx2n()");
 
     for (idx i = 0; i < dims.size(); ++i)

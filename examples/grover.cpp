@@ -13,7 +13,7 @@ int main() {
     std::cout << ">> Grover on n = " << n << " qubits\n";
 
     std::vector<idx> dims(n, 2); // local dimensions
-    std::vector<idx> subsys(n); // ordered subsystems
+    std::vector<idx> subsys(n);  // ordered subsystems
     std::iota(std::begin(subsys), std::end(subsys), 0);
 
     // number of elements in the database
