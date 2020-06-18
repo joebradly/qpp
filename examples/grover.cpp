@@ -2,6 +2,7 @@
 // Source: ./examples/grover.cpp
 #include <cmath>
 #include <iostream>
+#include <numeric>
 #include <tuple>
 #include <vector>
 
