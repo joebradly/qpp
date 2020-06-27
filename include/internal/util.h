@@ -42,7 +42,7 @@ namespace internal {
 // standard lexicographical order, e.g. 00, 01, 10, 11
 inline void n2multiidx(idx n, idx numdims, const idx* const dims,
                        idx* result) noexcept {
-// error checks only in DEBUG version
+    // error checks only in DEBUG version
 #ifndef NDEBUG
     if (numdims > 0) // numdims equal zero is a no-op
     {
@@ -73,7 +73,10 @@ inline idx multiidx2n(const idx* const midx, idx numdims,
     // error checks only in DEBUG version
     assert(numdims > 0);
     assert(numdims < internal::maxn);
-
+#ifndef NDEBUG
+    for (idx i = 0; i < numdims; ++i)
+        assert(midx[i] < dims[i]);
+#endif
     // no error checks in release version to improve speed
 
     // Static allocation for speed!
