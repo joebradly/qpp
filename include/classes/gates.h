@@ -269,11 +269,8 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
      * \return Modular multiplication gate
      */
     cmat MODMUL(idx a, idx N, idx n) const {
-
-// check co-primality (unitarity) only in DEBUG version
-#ifndef NDEBUG
+        // check co-primality (unitarity) only in DEBUG version
         assert(gcd(a, N) == 1);
-#endif
         // EXCEPTION CHECKS
 
         // check valid arguments
