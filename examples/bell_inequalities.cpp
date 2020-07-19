@@ -68,10 +68,10 @@ int main() {
         }
     }
     std::cout << "[N++ | N+- | N-+ | N--] (N++ + N-- - N+- - N-+)\n";
-    std::cout << "QS: " << disp(statistics[0], 4, " ") << E[0] << '\n';
-    std::cout << "QT: " << disp(statistics[1], 4, " ") << E[1] << '\n';
-    std::cout << "RS: " << disp(statistics[2], 4, " ") << E[2] << '\n';
-    std::cout << "RT: " << disp(statistics[3], 4, " ") << E[3] << '\n';
+    std::cout << "QS: " << disp(statistics[0], 4, " ") << " " << E[0] << '\n';
+    std::cout << "QT: " << disp(statistics[1], 4, " ") << " " << E[1] << '\n';
+    std::cout << "RS: " << disp(statistics[2], 4, " ") << " " << E[2] << '\n';
+    std::cout << "RT: " << disp(statistics[3], 4, " ") << " " << E[3] << '\n';
 
     // Experimental average
     double exp_avg = (E[0] - E[1] + E[2] + E[3]) / static_cast<double>(N);
