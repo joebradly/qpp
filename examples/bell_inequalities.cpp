@@ -67,7 +67,7 @@ int main() {
             ++gate_idx;
         }
     }
-    std::cout << "[N++ | N+- | N-+ | N--] (N++ + N-- - N+- - N-+)\n";
+    std::cout << "[N++ | N+- | N-+ | N--] (N++ + N--) - (N+- + N-+)\n";
     std::cout << "QS: " << disp(statistics[0], 4, " ") << " " << E[0] << '\n';
     std::cout << "QT: " << disp(statistics[1], 4, " ") << " " << E[1] << '\n';
     std::cout << "RS: " << disp(statistics[2], 4, " ") << " " << E[2] << '\n';
