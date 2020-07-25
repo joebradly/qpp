@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     /////////// testing ///////////
     using namespace qpp;
 
-    assert(argc > 2);
+    assert(argc > 1);
     std::size_t reps = std::stoi(argv[1]);
 
     std::size_t nq = 5, nc = nq;
