@@ -1,5 +1,6 @@
 Pre-release
-    -
+    - Significant improvemment in qpp::QEngine::execute() for multiple
+      repetitions
 
 Version 2.4 - 13 May 2020
     - Enabled documentation searching by setting SEARCHENGINE = ON in
