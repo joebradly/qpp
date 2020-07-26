@@ -628,7 +628,8 @@ class QEngine : public IDisplay, public IJSON {
      *
      * \param reps Number of repetitions
      * \param clear_stats Resets the collected measurement statistics hash
-     * table before the run \return Reference to the current instance
+     * table before the run
+     * \return Reference to the current instance
      */
     QEngine& execute(idx reps = 1, bool clear_stats = true) {
         auto initial_engine_state = st_; // saves the engine entry state
@@ -646,8 +647,7 @@ class QEngine : public IDisplay, public IJSON {
         }
         for (auto it = qc_->begin(); it != first_measurement_it; ++it)
             execute(it);
-        ket psi = get_psi();
-        initial_engine_state.psi_ = std::move(psi);
+        initial_engine_state.psi_ = get_psi();
 
         for (idx i = 0; i < reps; ++i) {
             // sets the state of the engine to the entry state
@@ -675,8 +675,9 @@ class QEngine : public IDisplay, public IJSON {
      * Displays the state of the engine in JSON format
      *
      * \param enclosed_in_curly_brackets If true, encloses the result in
-     * curly brackets \return String containing the JSON representation of
-     * the state of the engine
+     * curly brackets
+     * \return String containing the JSON representation of the state of the
+     * engine
      */
     std::string to_JSON(bool enclosed_in_curly_brackets = true) const override {
         std::string result;
