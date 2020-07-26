@@ -47,13 +47,13 @@ class QEngine : public IDisplay, public IJSON {
      * \brief Current state of the engine
      */
     struct state_ {
-        const QCircuit* qc_;          ///< non-owning pointer to the parent
-                                      ///< const quantum circuit description
+        const QCircuit* qc_; ///< non-owning pointer to the parent
+        ///< const quantum circuit description
         ket psi_{};                   ///< state vector
         std::vector<double> probs_{}; ///< measurement probabilities
         std::vector<idx> dits_{};     ///< classical dits, little-endian order
         std::vector<idx> subsys_{}; ///< keeps track of the measured subsystems,
-                                    ///< re-label them after measurements
+        ///< re-label them after measurements
 
         /**
          * \brief Constructor
@@ -636,12 +636,25 @@ class QEngine : public IDisplay, public IJSON {
         if (clear_stats)
             reset_stats();
 
+        // find the position of the first measurement step
+        auto first_measurement_it = qc_->begin();
+        while (first_measurement_it != qc_->end()) {
+            if ((*first_measurement_it).type_ ==
+                QCircuit::StepType::MEASUREMENT)
+                break;
+            ++first_measurement_it;
+        }
+        for (auto it = qc_->begin(); it != first_measurement_it; ++it)
+            execute(it);
+        ket psi = get_psi();
+        initial_engine_state.psi_ = std::move(psi);
+
         for (idx i = 0; i < reps; ++i) {
             // sets the state of the engine to the entry state
             st_ = initial_engine_state;
 
-            for (auto&& elem : *qc_)
-                (void) execute(elem);
+            for (auto it = first_measurement_it; it != qc_->end(); ++it)
+                execute(it);
 
             // we measured at least one qudit
             if (qc_->get_measurement_count() > 0) {
