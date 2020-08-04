@@ -12,8 +12,8 @@ int main() {
     // detector settings (Q and R on Alice's side, S and T on Bob's side)
     cmat Q = gt.Z;
     cmat R = gt.X;
-    cmat S = (-gt.Z - gt.X) / sqrt(2);
-    cmat T = (gt.Z - gt.X) / sqrt(2);
+    cmat S = (-gt.Z - gt.X) / sqrt(2.0);
+    cmat T = (gt.Z - gt.X) / sqrt(2.0);
 
     // number of "experiments" for each of the 4 detector settings
     idx N = 10000;
