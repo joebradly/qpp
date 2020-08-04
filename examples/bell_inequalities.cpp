@@ -86,5 +86,5 @@ int main() {
     std::cout << ">> Theoretical value of <QS> + <RS> + <RT> - <QT> = ";
     std::cout << th_avg << '\n';
 
-    std::cout << ">> 2 * sqrt(2) = " << 2 * sqrt(2) << '\n';
+    std::cout << ">> 2 * sqrt(2) = " << 2 * sqrt(2.0) << '\n';
 }
