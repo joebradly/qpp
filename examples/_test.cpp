@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "qpp.h"
-#include "experimental/experimental.h"
+#include "experimental/experimental.hpp"
 
 int main(int argc, char** argv) {
     /////////// testing ///////////
@@ -14,7 +14,11 @@ int main(int argc, char** argv) {
     std::size_t nq = 5, nc = nq;
     QCircuit qCircuit{nq, nc};
     qCircuit.QFT();
-    for (idx i = 0; i < nc; ++i)
+    qCircuit.QFT();
+    qCircuit.QFT();
+    qCircuit.QFT();
+    qCircuit.discard(0);
+    for (idx i = 1; i < nq; ++i)
         qCircuit.measureZ(i, i);
     std::cout << qCircuit << '\n';
 
