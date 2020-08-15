@@ -54,7 +54,9 @@ class Dynamic_bitset : public IDisplay {
      * \param pos Bit location
      * \return Index of the \a pos bit in the storage space
      */
-    static idx index_(idx pos) { return pos / (sizeof(value_type) * CHAR_BIT); }
+    inline static idx index_(idx pos) {
+        return pos / (sizeof(value_type) * CHAR_BIT);
+    }
 
     /**
      * \brief Offset of the \a pos bit in the storage space relative to its
@@ -64,7 +66,7 @@ class Dynamic_bitset : public IDisplay {
      * \return Offset of the \a pos bit in the storage space relative to its
      * index
      */
-    static idx offset_(idx pos) {
+    inline static idx offset_(idx pos) {
         return pos % (sizeof(value_type) * CHAR_BIT);
     }
 
