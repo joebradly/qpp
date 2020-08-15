@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/noise.h
+ * \file classes/noise.hpp
  * \brief Noise models
  */
 
-#ifndef CLASSES_NOISE_H_
-#define CLASSES_NOISE_H_
+#ifndef CLASSES_NOISE_HPP_
+#define CLASSES_NOISE_HPP_
 
 namespace qpp {
 /**
@@ -554,4 +554,4 @@ class QuditDepolarizingNoise : public NoiseBase<NoiseType::StateIndependent> {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_NOISE_H_ */
+#endif /* CLASSES_NOISE_HPP_ */

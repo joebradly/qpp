@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/states.h
+ * \file classes/states.hpp
  * \brief Quantum states
  */
 
-#ifndef CLASSES_STATES_H_
-#define CLASSES_STATES_H_
+#ifndef CLASSES_STATES_HPP_
+#define CLASSES_STATES_HPP_
 
 namespace qpp {
 /**
@@ -305,9 +305,9 @@ class States final : public internal::Singleton<const States> // const Singleton
     /**
      * \brief Default destructor
      */
-    ~States() = default;
+    ~States() override = default;
 }; /* class States */
 
 } /* namespace qpp */
 
-#endif /* CLASSES_STATES_H_ */
+#endif /* CLASSES_STATES_HPP_ */

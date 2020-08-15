@@ -25,12 +25,12 @@
  */
 
 /**
- * \file experimental/experimental.h
+ * \file experimental/experimental.hpp
  * \brief Experimental/test functions/classes
  */
 
-#ifndef EXPERIMENTAL_EXPERIMENTAL_H_
-#define EXPERIMENTAL_EXPERIMENTAL_H_
+#ifndef EXPERIMENTAL_EXPERIMENTAL_HPP_
+#define EXPERIMENTAL_EXPERIMENTAL_HPP_
 
 namespace qpp {
 /**
@@ -40,4 +40,4 @@ namespace qpp {
 namespace experimental {} /* namespace experimental */
 } /* namespace qpp */
 
-#endif /* EXPERIMENTAL_EXPERIMENTAL_H_ */
+#endif /* EXPERIMENTAL_EXPERIMENTAL_HPP_ */

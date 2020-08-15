@@ -25,12 +25,12 @@
  */
 
 /**
- * \file qasm/ast.h
+ * \file qasm/ast.hpp
  * \brief openQASM 2.0 AST
  */
 
-#ifndef QASM_AST_H_
-#define QASM_AST_H_
+#ifndef QASM_AST_HPP_
+#define QASM_AST_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -1601,4 +1601,4 @@ class UExpr final : public Expr {
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_AST_H_ */
+#endif /* QASM_AST_HPP_ */

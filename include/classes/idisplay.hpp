@@ -25,13 +25,13 @@
  */
 
 /**
- * \file classes/idisplay.h
+ * \file classes/idisplay.hpp
  * \brief Display interface via the non-virtual interface (NVI) and very basic
  * JSON serialization support interface
  */
 
-#ifndef CLASSES_IDISPLAY_H_
-#define CLASSES_IDISPLAY_H_
+#ifndef CLASSES_IDISPLAY_HPP_
+#define CLASSES_IDISPLAY_HPP_
 
 namespace qpp {
 /**
@@ -97,4 +97,4 @@ class IJSON {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_IDISPLAY_H_ */
+#endif /* CLASSES_IDISPLAY_HPP_ */

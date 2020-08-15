@@ -25,12 +25,12 @@
  */
 
 /**
- * \file qasm/token.h
+ * \file qasm/token.hpp
  * \brief openQASM tokens
  */
 
-#ifndef QASM_TOKEN_H_
-#define QASM_TOKEN_H_
+#ifndef QASM_TOKEN_HPP_
+#define QASM_TOKEN_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -484,4 +484,4 @@ static const std::unordered_map<std::string, Token::Kind> keywords{
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_TOKEN_H_ */
+#endif /* QASM_TOKEN_HPP_ */

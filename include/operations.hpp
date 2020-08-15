@@ -25,12 +25,12 @@
  */
 
 /**
- * \file operations.h
+ * \file operations.hpp
  * \brief Quantum operation functions
  */
 
-#ifndef OPERATIONS_H_
-#define OPERATIONS_H_
+#ifndef OPERATIONS_HPP_
+#define OPERATIONS_HPP_
 
 #include "qpp.h"
 namespace qpp {
@@ -2290,4 +2290,4 @@ qRAM(const Eigen::MatrixBase<Derived>& psi, const qram& data) {
 }
 } /* namespace qpp */
 
-#endif /* OPERATIONS_H_ */
+#endif /* OPERATIONS_HPP_ */

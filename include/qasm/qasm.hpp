@@ -25,12 +25,12 @@
  */
 
 /**
- * \file qasm/qasm.h
+ * \file qasm/qasm.hpp
  * \brief openQASM to QCircuit interface
  */
 
-#ifndef QASM_QASM_H_
-#define QASM_QASM_H_
+#ifndef QASM_QASM_HPP_
+#define QASM_QASM_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -81,4 +81,4 @@ inline QCircuit read_from_file(const std::string& fname) {
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_QASM_H_ */
+#endif /* QASM_QASM_HPP_ */

@@ -29,8 +29,8 @@
  * \brief Support for classical reversible circuits
  */
 
-#ifndef CLASSES_REVERSIBLE_H
-#define CLASSES_REVERSIBLE_H
+#ifndef CLASSES_REVERSIBLE_HPP_
+#define CLASSES_REVERSIBLE_HPP_
 
 namespace qpp {
 /**
@@ -54,7 +54,7 @@ class Dynamic_bitset : public IDisplay {
      * \param pos Bit location
      * \return Index of the \a pos bit in the storage space
      */
-    idx index_(idx pos) const { return pos / (sizeof(value_type) * CHAR_BIT); }
+    static idx index_(idx pos) { return pos / (sizeof(value_type) * CHAR_BIT); }
 
     /**
      * \brief Offset of the \a pos bit in the storage space relative to its
@@ -64,7 +64,9 @@ class Dynamic_bitset : public IDisplay {
      * \return Offset of the \a pos bit in the storage space relative to its
      * index
      */
-    idx offset_(idx pos) const { return pos % (sizeof(value_type) * CHAR_BIT); }
+    static idx offset_(idx pos) {
+        return pos % (sizeof(value_type) * CHAR_BIT);
+    }
 
   public:
     /**
@@ -79,7 +81,7 @@ class Dynamic_bitset : public IDisplay {
     /**
      * \brief Default virtual destructor
      */
-    virtual ~Dynamic_bitset() = default;
+    ~Dynamic_bitset() override = default;
 
     /* getters */
 
@@ -128,7 +130,7 @@ class Dynamic_bitset : public IDisplay {
      * \return Value of the bit at position \a pos
      */
     bool get(idx pos) const noexcept {
-        return 1 & (v_[index_(pos)] >> offset_(pos));
+        return static_cast<value_type>(1) & (v_[index_(pos)] >> offset_(pos));
     }
 
     /**
@@ -181,8 +183,9 @@ class Dynamic_bitset : public IDisplay {
      * \return Reference to the current instance
      */
     Dynamic_bitset& set(idx pos, bool value = true) {
-        value ? v_[index_(pos)] |= (1 << offset_(pos))
-              : v_[index_(pos)] &= ~(1 << offset_(pos));
+        value
+            ? v_[index_(pos)] |= (static_cast<value_type>(1) << offset_(pos))
+            : v_[index_(pos)] &= ~(static_cast<value_type>(1) << offset_(pos));
 
         //        v_[index_(pos)] &= ~(!value << offset_(pos));
 
@@ -197,7 +200,7 @@ class Dynamic_bitset : public IDisplay {
     Dynamic_bitset& set() noexcept {
         idx bitset_storage_size = storage_size();
         for (idx i = 0; i < bitset_storage_size; ++i) {
-            v_[i] = ~0;
+            v_[i] = ~static_cast<value_type>(0);
         }
 
         return *this;
@@ -243,7 +246,7 @@ class Dynamic_bitset : public IDisplay {
      * \return Reference to the current instance
      */
     Dynamic_bitset& reset(idx pos) {
-        v_[index_(pos)] &= ~(1 << offset_(pos));
+        v_[index_(pos)] &= ~(static_cast<value_type>(1) << offset_(pos));
 
         return *this;
     }
@@ -269,7 +272,7 @@ class Dynamic_bitset : public IDisplay {
      * \return Reference to the current instance
      */
     Dynamic_bitset& flip(idx pos) {
-        v_[index_(pos)] ^= 1 << (offset_(pos));
+        v_[index_(pos)] ^= static_cast<value_type>(1) << (offset_(pos));
 
         return *this;
     }
@@ -431,7 +434,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
     /**
      * \brief Default virtual destructor
      */
-    virtual ~Bit_circuit() = default;
+    ~Bit_circuit() override = default;
 
     /**
      * \brief Bit flip
@@ -451,7 +454,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         bNOT_.flip(i);
         // check whether gates overlap
-        if (bNOT_.get(i) == false) {
+        if (!bNOT_.get(i)) {
             // reset the b bitset
             bNOT_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -465,7 +468,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         btotal_.flip(i);
         // check whether gates overlap
-        if (btotal_.get(i) == false) {
+        if (!btotal_.get(i)) {
             // reset the b bitset
             btotal_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -484,8 +487,9 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Reference to the current instance
      */
     Bit_circuit& CNOT(idx ctrl, idx target) {
-        v_[index_(target)] ^= (1 & (v_[index_(ctrl)] >> offset_(ctrl)))
-                              << offset_(target);
+        v_[index_(target)] ^=
+            (static_cast<value_type>(1) & (v_[index_(ctrl)] >> offset_(ctrl)))
+            << offset_(target);
         ++count_["CNOT"];
         ++count_[__FILE__ "__total__"];
 
@@ -495,7 +499,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         bCNOT_.flip(ctrl).flip(target);
         // check whether gates overlap
-        if (bCNOT_.get(ctrl) == false || bCNOT_.get(target) == false) {
+        if (!bCNOT_.get(ctrl) || !bCNOT_.get(target)) {
             // reset the b bitset
             bCNOT_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -509,7 +513,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         btotal_.flip(ctrl).flip(target);
         // check whether gates overlap
-        if (btotal_.get(ctrl) == false || btotal_.get(target) == false) {
+        if (!btotal_.get(ctrl) || !btotal_.get(target)) {
             // reset the b bitset
             btotal_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -529,9 +533,10 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Reference to the current instance
      */
     Bit_circuit& TOF(idx i, idx j, idx k) {
-        v_[index_(k)] ^= ((1 & (v_[index_(j)] >> offset_(j))) &
-                          (1 & (v_[index_(i)] >> offset_(i))))
-                         << offset_(k);
+        v_[index_(k)] ^=
+            ((static_cast<value_type>(1) & (v_[index_(j)] >> offset_(j))) &
+             (static_cast<value_type>(1) & (v_[index_(i)] >> offset_(i))))
+            << offset_(k);
         ++count_["TOF"];
         ++count_[__FILE__ "__total__"];
 
@@ -541,8 +546,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         bTOF_.flip(i).flip(j).flip(k);
         // check whether gates overlap
-        if (bTOF_.get(i) == false || bTOF_.get(j) == false ||
-            bTOF_.get(k) == false) {
+        if (!bTOF_.get(i) || !bTOF_.get(j) || !bTOF_.get(k)) {
             // reset the b bitset
             bTOF_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -556,8 +560,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         btotal_.flip(i).flip(j).flip(k);
         // check whether gates overlap
-        if (btotal_.get(i) == false || btotal_.get(j) == false ||
-            btotal_.get(k) == false) {
+        if (!btotal_.get(i) || !btotal_.get(j) || !btotal_.get(k)) {
             // reset the b bitset
             btotal_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -589,7 +592,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         bSWAP_.flip(i).flip(j);
         // check whether gates overlap
-        if (bSWAP_.get(i) == false || bSWAP_.get(j) == false) {
+        if (!bSWAP_.get(i) || !bSWAP_.get(j)) {
             // reset the b bitset
             bSWAP_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -603,7 +606,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         btotal_.flip(i).flip(j);
         // check whether gates overlap
-        if (btotal_.get(i) == false || btotal_.get(j) == false) {
+        if (!btotal_.get(i) || !btotal_.get(j)) {
             // reset the b bitset
             btotal_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -635,8 +638,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         bFRED_.flip(i).flip(j).flip(k);
         // check whether gates overlap
-        if (bFRED_.get(i) == false || bFRED_.get(j) == false ||
-            bFRED_.get(k) == false) {
+        if (!bFRED_.get(i) || !bFRED_.get(j) || !bFRED_.get(k)) {
             // reset the b bitset
             bFRED_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -650,8 +652,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
         // apply the gate
         btotal_.flip(i).flip(j).flip(k);
         // check whether gates overlap
-        if (btotal_.get(i) == false || btotal_.get(j) == false ||
-            btotal_.get(k) == false) {
+        if (!btotal_.get(i) || !btotal_.get(j) || !btotal_.get(k)) {
             // reset the b bitset
             btotal_ = Dynamic_bitset{n_};
             // set to true the locations of the last gate
@@ -683,7 +684,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Gate count
      */
     idx get_gate_count(const std::string& name) const {
-        idx result = 0;
+        idx result;
 
         // EXCEPTION CHECKS
 
@@ -706,7 +707,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Total gate count
      */
     idx get_gate_count() const {
-        idx result = 0;
+        idx result;
 
         // EXCEPTION CHECKS
 
@@ -727,7 +728,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Gate depth
      */
     idx get_gate_depth(const std::string& name) const {
-        idx result = 0;
+        idx result;
 
         // EXCEPTION CHECKS
 
@@ -750,7 +751,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
      * \return Total gate depth
      */
     idx get_gate_depth() const {
-        idx result = 0;
+        idx result;
 
         // EXCEPTION CHECKS
 
@@ -786,7 +787,7 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
             ", \"total gate count\" : " + std::to_string(get_gate_count());
         result +=
             ", \"total gate depth\" : " + std::to_string(get_gate_depth());
-        result += ", \"bit state\" : \"" + this->to_string() + '\"';
+        result += R"(, "bit state" : ")" + this->to_string() + '\"';
         result += ", \"Hamming weight\" : " + std::to_string(count());
 
         if (enclosed_in_curly_brackets)
@@ -818,4 +819,4 @@ class Bit_circuit : public Dynamic_bitset, public IJSON {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_REVERSIBLE_H */
+#endif /* CLASSES_REVERSIBLE_HPP_ */

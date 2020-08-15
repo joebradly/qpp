@@ -1,3 +1,5 @@
+#include <utility>
+
 /*
  * This file is part of Quantum++.
  *
@@ -25,12 +27,12 @@
  */
 
 /**
- * \file internal/classes/iomanip.h
+ * \file internal/classes/iomanip.hpp
  * \brief Input/output manipulators
  */
 
-#ifndef INTERNAL_CLASSES_IOMANIP_H_
-#define INTERNAL_CLASSES_IOMANIP_H_
+#ifndef INTERNAL_CLASSES_IOMANIP_HPP_
+#define INTERNAL_CLASSES_IOMANIP_HPP_
 
 namespace qpp {
 namespace internal {
@@ -45,11 +47,10 @@ class IOManipRange : public IDisplay {
 
   public:
     explicit IOManipRange(InputIterator first, InputIterator last,
-                          const std::string& separator,
-                          const std::string& start = "[",
-                          const std::string& end = "]", double chop = qpp::chop)
-        : first_{first}, last_{last},
-          separator_{separator}, start_{start}, end_{end}, chop_{chop} {}
+                          std::string separator, std::string start = "[",
+                          std::string end = "]", double chop = qpp::chop)
+        : first_{first}, last_{last}, separator_{std::move(separator)},
+          start_{std::move(start)}, end_{std::move(end)}, chop_{chop} {}
 
     // to silence -Weffc++ warnings for classes that have pointer members
     // (whenever we have a pointer instantiation,
@@ -73,7 +74,7 @@ class IOManipRange : public IDisplay {
 
         return os;
     }
-}; // class IOManipRange
+}; /* class IOManipRange */
 
 template <typename PointerType>
 class IOManipPointer : public IDisplay {
@@ -83,13 +84,11 @@ class IOManipPointer : public IDisplay {
     double chop_;
 
   public:
-    explicit IOManipPointer(const PointerType* p, idx N,
-                            const std::string& separator,
-                            const std::string& start = "[",
-                            const std::string& end = "]",
+    explicit IOManipPointer(const PointerType* p, idx N, std::string separator,
+                            std::string start = "[", std::string end = "]",
                             double chop = qpp::chop)
-        : p_{p}, N_{N},
-          separator_{separator}, start_{start}, end_{end}, chop_{chop} {}
+        : p_{p}, N_{N}, separator_{std::move(separator)},
+          start_{std::move(start)}, end_{std::move(end)}, chop_{chop} {}
 
     // to silence -Weffc++ warnings for classes that have pointer members
     IOManipPointer(const IOManipPointer&) = default;
@@ -109,7 +108,7 @@ class IOManipPointer : public IDisplay {
 
         return os;
     }
-}; // class IOManipPointer
+}; /* class IOManipPointer */
 
 // silence g++4.8.x bogus warning -Wnon-virtual-dtor for
 // qpp::internal::Display_impl_ when class qpp::internal::IOManipEigen
@@ -144,9 +143,9 @@ class IOManipEigen : public IDisplay, private Display_Impl_ {
     std::ostream& display(std::ostream& os) const override {
         return display_impl_(A_, os, chop_);
     }
-}; // class IOManipEigen
+}; /* class IOManipEigen */
 
 } /* namespace internal */
 } /* namespace qpp */
 
-#endif /* INTERNAL_CLASSES_IOMANIP_H_ */
+#endif /* INTERNAL_CLASSES_IOMANIP_HPP_ */

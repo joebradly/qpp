@@ -25,12 +25,12 @@
  */
 
 /**
- * \file random.h
+ * \file random.hpp
  * \brief Randomness-related functions
  */
 
-#ifndef RANDOM_H_
-#define RANDOM_H_
+#ifndef RANDOM_HPP_
+#define RANDOM_HPP_
 
 namespace qpp {
 /**
@@ -535,4 +535,4 @@ inline bool bernoulli(double p = 0.5) {
 
 } /* namespace qpp */
 
-#endif /* RANDOM_H_ */
+#endif /* RANDOM_HPP_ */

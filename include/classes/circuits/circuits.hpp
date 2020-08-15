@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/circuits/circuits.h
+ * \file classes/circuits/circuits.hpp
  * \brief Qudit quantum circuits
  */
 
-#ifndef CLASSES_CIRCUITS_CIRCUITS_H_
-#define CLASSES_CIRCUITS_CIRCUITS_H_
+#ifndef CLASSES_CIRCUITS_CIRCUITS_HPP_
+#define CLASSES_CIRCUITS_CIRCUITS_HPP_
 
 namespace qpp {
 /**
@@ -226,12 +226,11 @@ class QCircuit : public IDisplay, public IJSON {
          * \param name Optional gate name
          */
         explicit GateStep(GateType gate_type, std::size_t gate_hash,
-                          const std::vector<idx>& ctrl,
-                          const std::vector<idx>& target,
-                          const std::vector<idx>& shift = {},
-                          std::string name = {})
-            : gate_type_{gate_type}, gate_hash_{gate_hash}, ctrl_{ctrl},
-              target_{target}, shift_{shift}, name_{name} {}
+                          std::vector<idx> ctrl, std::vector<idx> target,
+                          std::vector<idx> shift = {}, std::string name = {})
+            : gate_type_{gate_type}, gate_hash_{gate_hash},
+              ctrl_{std::move(ctrl)}, target_{std::move(target)},
+              shift_{std::move(shift)}, name_{std::move(name)} {}
 
         /**
          * \brief Equality operator
@@ -392,11 +391,12 @@ class QCircuit : public IDisplay, public IJSON {
          * \param name Optional gate name
          */
         explicit MeasureStep(MeasureType measurement_type,
-                             const std::vector<std::size_t>& mats_hash,
-                             const std::vector<idx>& target, idx c_reg,
+                             std::vector<std::size_t> mats_hash,
+                             std::vector<idx> target, idx c_reg,
                              std::string name = {})
-            : measurement_type_{measurement_type}, mats_hash_{mats_hash},
-              target_{target}, c_reg_{c_reg}, name_{name} {}
+            : measurement_type_{measurement_type},
+              mats_hash_{std::move(mats_hash)}, target_{std::move(target)},
+              c_reg_{c_reg}, name_{std::move(name)} {}
 
         /**
          * \brief Equality operator
@@ -710,7 +710,9 @@ class QCircuit : public IDisplay, public IJSON {
          * \return True if the iterators are not equal (bit by bit), false
          * otherwise
          */
-        bool operator!=(iterator rhs) const { return !(*this == rhs); }
+        bool operator!=(const iterator& rhs) const noexcept {
+            return !(*this == rhs);
+        }
 
         /**
          * \brief Safe de-referencing operator
@@ -862,7 +864,7 @@ class QCircuit : public IDisplay, public IJSON {
      * \param name Circuit name (optional)
      */
     explicit QCircuit(idx nq, idx nc = 0, idx d = 2, std::string name = {})
-        : nq_{nq}, nc_{nc}, d_{d}, name_{name}, measured_(nq, false),
+        : nq_{nq}, nc_{nc}, d_{d}, name_{std::move(name)}, measured_(nq, false),
           clean_qudits_(nq_, true), clean_dits_(nc_, true) {
         // EXCEPTION CHECKS
 
@@ -876,7 +878,7 @@ class QCircuit : public IDisplay, public IJSON {
     /**
      * \brief Default virtual destructor
      */
-    virtual ~QCircuit() = default;
+    ~QCircuit() override = default;
 
     // static member functions
     /**
@@ -1577,7 +1579,7 @@ class QCircuit : public IDisplay, public IJSON {
      */
     QCircuit& gate_fan(const cmat& U, const std::initializer_list<idx>& target,
                        std::string name = {}) {
-        return gate_fan(U, std::vector<idx>(target), name);
+        return gate_fan(U, std::vector<idx>(target), std::move(name));
     }
 
     /**
@@ -3308,22 +3310,21 @@ class QCircuit : public IDisplay, public IJSON {
                       std::begin(measured_));
             std::copy_if(std::begin(other.clean_dits_),
                          std::end(other.clean_dits_), std::begin(clean_dits_),
-                         [](bool val) { return val == false; });
-            std::copy_if(std::begin(other.clean_qudits_),
-                         std::end(other.clean_qudits_),
-                         std::begin(clean_qudits_),
-                         [](bool val) { return val == false; });
+                         [](bool val) { return !val; });
+            std::copy_if(
+                std::begin(other.clean_qudits_), std::end(other.clean_qudits_),
+                std::begin(clean_qudits_), [](bool val) { return !val; });
         } else {
             std::copy(std::begin(other.measured_), std::end(other.measured_),
                       std::next(std::begin(measured_), pos_qudit));
             std::copy_if(std::begin(other.clean_dits_),
                          std::end(other.clean_dits_),
                          std::next(std::begin(clean_dits_), pos_qudit),
-                         [](bool val) { return val == false; });
+                         [](bool val) { return !val; });
             std::copy_if(std::begin(other.clean_qudits_),
                          std::end(other.clean_qudits_),
                          std::next(std::begin(clean_qudits_), pos_qudit),
-                         [](bool val) { return val == false; });
+                         [](bool val) { return !val; });
         }
 
         // STEP 2: append the copy of other to the current instance
@@ -3690,7 +3691,7 @@ class QCircuit : public IDisplay, public IJSON {
         result += "\"nq\" : " + std::to_string(nq_);
         result += ", \"nc\" : " + std::to_string(nc_);
         result += ", \"d\" : " + std::to_string(d_);
-        result += ", \"name\" : \"" + name_ + '\"';
+        result += R"(, "name" : ")" + name_ + '\"';
 
         bool is_first = true;
         std::ostringstream ss;
@@ -3924,4 +3925,4 @@ class QCircuit : public IDisplay, public IJSON {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_CIRCUITS_CIRCUITS_H_ */
+#endif /* CLASSES_CIRCUITS_CIRCUITS_HPP_ */

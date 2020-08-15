@@ -25,12 +25,12 @@
  */
 
 /**
- * \file traits.h
+ * \file traits.hpp
  * \brief Type traits
  */
 
-#ifndef TRAITS_H_
-#define TRAITS_H_
+#ifndef TRAITS_HPP_
+#define TRAITS_HPP_
 
 namespace qpp {
 // Citing from http://en.cppreference.com/w/cpp/types/void_t:
@@ -41,7 +41,7 @@ namespace qpp {
  * \brief Helper for qpp::to_void<> alias template
  * \see qpp::to_void<>
  */
-template <typename... Ts>
+template <typename...>
 struct make_void {
     typedef void type;
 };
@@ -146,4 +146,4 @@ struct is_complex<std::complex<T>> : std::true_type {};
 
 } /* namespace qpp */
 
-#endif /* TRAITS_H_ */
+#endif /* TRAITS_HPP_ */

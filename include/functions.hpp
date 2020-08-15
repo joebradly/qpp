@@ -25,12 +25,12 @@
  */
 
 /**
- * \file functions.h
+ * \file functions.hpp
  * \brief Generic quantum computing functions
  */
 
-#ifndef FUNCTIONS_H_
-#define FUNCTIONS_H_
+#ifndef FUNCTIONS_HPP_
+#define FUNCTIONS_HPP_
 
 namespace qpp {
 // Eigen function wrappers
@@ -1789,8 +1789,8 @@ inline std::vector<idx> complement(std::vector<idx> subsys, idx n) {
 
     if (n < subsys.size())
         throw exception::OutOfRange("qpp::complement()");
-    for (idx i = 0; i < subsys.size(); ++i)
-        if (subsys[i] >= n)
+    for (idx s : subsys)
+        if (s >= n)
             throw exception::SubsysMismatchDims("qpp::complement()");
     // END EXCEPTION CHECKS
 
@@ -1970,7 +1970,8 @@ namespace internal {
 template <class T>
 void hash_combine(std::size_t& seed, const T& v) {
     std::hash<T> hasher;
-    seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    seed ^= hasher(v) + 0x9e3779b9 + (seed << static_cast<std::size_t>(6)) +
+            (seed >> static_cast<std::size_t>(2));
 }
 } /* namespace internal */
 
@@ -2031,7 +2032,7 @@ struct EqualEigen {
         const dyn_mat<typename Derived::Scalar>& rA = A.derived();
         const dyn_mat<typename Derived::Scalar>& rB = B.derived();
         if (rA.rows() == rB.rows() && rA.cols() == rB.cols())
-            return rA == rB ? true : false;
+            return rA == rB;
         else
             return false;
     }
@@ -2075,4 +2076,4 @@ struct EqualSameSizeStringDits {
 } /* namespace internal */
 } /* namespace qpp */
 
-#endif /* FUNCTIONS_H_ */
+#endif /* FUNCTIONS_HPP_ */

@@ -27,12 +27,12 @@
  */
 
 /**
- * \file qasm/lexer.h
+ * \file qasm/lexer.hpp
  * \brief Lexical analysis for openQASM
  */
 
-#ifndef QASM_LEXER_H_
-#define QASM_LEXER_H_
+#ifndef QASM_LEXER_HPP_
+#define QASM_LEXER_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -354,4 +354,4 @@ class Lexer {
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_LEXER_H_ */
+#endif /* QASM_LEXER_HPP_ */

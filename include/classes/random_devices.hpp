@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/random_devices.h
+ * \file classes/random_devices.hpp
  * \brief Random devices
  */
 
-#ifndef CLASSES_RANDOM_DEVICES_H_
-#define CLASSES_RANDOM_DEVICES_H_
+#ifndef CLASSES_RANDOM_DEVICES_HPP_
+#define CLASSES_RANDOM_DEVICES_HPP_
 
 namespace qpp {
 /**
@@ -81,9 +81,9 @@ class RandomDevices final : public internal::Singleton<RandomDevices> {
     /**
      * \brief Default destructor
      */
-    ~RandomDevices() = default;
+    ~RandomDevices() override = default;
 }; /* class RandomDevices */
 
 } /* namespace qpp */
 
-#endif /* CLASSES_RANDOM_DEVICES_H_ */
+#endif /* CLASSES_RANDOM_DEVICES_HPP_ */

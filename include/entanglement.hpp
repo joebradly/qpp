@@ -25,12 +25,12 @@
  */
 
 /**
- * \file entanglement.h
+ * \file entanglement.hpp
  * \brief Entanglement functions
  */
 
-#ifndef ENTANGLEMENT_H_
-#define ENTANGLEMENT_H_
+#ifndef ENTANGLEMENT_HPP_
+#define ENTANGLEMENT_HPP_
 
 namespace qpp {
 /**
@@ -565,4 +565,4 @@ double concurrence(const Eigen::MatrixBase<Derived>& A) {
 
 } /* namespace qpp */
 
-#endif /* ENTANGLEMENT_H_ */
+#endif /* ENTANGLEMENT_HPP_ */

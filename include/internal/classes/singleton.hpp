@@ -25,12 +25,12 @@
  */
 
 /**
- * \file internal/classes/singleton.h
+ * \file internal/classes/singleton.hpp
  * \brief Singleton pattern via CRTP
  */
 
-#ifndef INTERNAL_CLASSES_SINGLETON_H_
-#define INTERNAL_CLASSES_SINGLETON_H_
+#ifndef INTERNAL_CLASSES_SINGLETON_HPP_
+#define INTERNAL_CLASSES_SINGLETON_HPP_
 
 namespace qpp {
 namespace internal // internal class, do not modify
@@ -80,14 +80,12 @@ class Singleton {
   protected:
     Singleton() noexcept = default;
 
-    Singleton(const Singleton&) = delete;
-
-    Singleton& operator=(const Singleton&) = delete;
-
     virtual ~Singleton() = default; // to silence base class Singleton<T> has a
                                     // non-virtual destructor [-Weffc++]
 
   public:
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
     static T& get_instance() noexcept(std::is_nothrow_constructible<T>::value) {
         // Guaranteed to be destroyed.
         // Instantiated on first use.
@@ -108,11 +106,10 @@ class Singleton {
 
         return instance;
     }
-
 #endif // NO_THREAD_LOCAL_
 };     /* class Singleton */
 
 } /* namespace internal */
 } /* namespace qpp */
 
-#endif /* INTERNAL_CLASSES_SINGLETON_H_ */
+#endif /* INTERNAL_CLASSES_SINGLETON_HPP_ */

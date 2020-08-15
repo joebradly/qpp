@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/init.h
+ * \file classes/init.hpp
  * \brief Initialization
  */
 
-#ifndef CLASSES_INIT_H_
-#define CLASSES_INIT_H_
+#ifndef CLASSES_INIT_HPP_
+#define CLASSES_INIT_HPP_
 
 namespace qpp {
 /**
@@ -46,19 +46,21 @@ class Init final : public internal::Singleton<const Init> // const Singleton
     /**
      * \brief Additional initializations
      */
-    Init() {
-        // set default output format and precision
-        // std::cout << std::fixed; // use fixed format for nice formatting
-        // std::cout << std::scientific;
-        // std::cout << std::setprecision(4); // only for fixed/scientific modes
-    }
+    Init() = default;
+    //{
+    // set default output format and precision
+    // std::cout << std::fixed; // use fixed format for nice formatting
+    // std::cout << std::scientific;
+    // std::cout << std::setprecision(4); // only for fixed/scientific modes
+    //}
 
     /**
      * \brief Cleanups
      */
-    ~Init() {}
+    ~Init() override = default;
+    // {}
 }; /* class Init */
 
 } /* namespace qpp */
 
-#endif /* CLASSES_INIT_H_ */
+#endif /* CLASSES_INIT_HPP_ */

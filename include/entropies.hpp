@@ -25,12 +25,12 @@
  */
 
 /**
- * \file entropies.h
+ * \file entropies.hpp
  * \brief Entropy functions
  */
 
-#ifndef ENTROPY_H_
-#define ENTROPY_H_
+#ifndef ENTROPY_HPP_
+#define ENTROPY_HPP_
 
 namespace qpp {
 /**
@@ -78,9 +78,9 @@ inline double entropy(const std::vector<double>& prob) {
     // END EXCEPTION CHECKS
 
     double result = 0;
-    for (idx i = 0; i < prob.size(); ++i)
-        if (std::abs(prob[i]) != 0) // not identically zero
-            result -= std::abs(prob[i]) * std::log2(std::abs(prob[i]));
+    for (double p : prob)
+        if (std::abs(p) != 0) // not identically zero
+            result -= std::abs(p) * std::log2(std::abs(p));
 
     return result;
 }
@@ -165,17 +165,17 @@ inline double renyi(const std::vector<double>& prob, double alpha) {
     if (alpha == infty) // H min
     {
         double max = 0;
-        for (idx i = 0; i < prob.size(); ++i)
-            if (std::abs(prob[i]) > max)
-                max = std::abs(prob[i]);
+        for (double p : prob)
+            if (std::abs(p) > max)
+                max = std::abs(p);
 
         return -std::log2(max);
     }
 
     double result = 0;
-    for (idx i = 0; i < prob.size(); ++i)
-        if (std::abs(prob[i]) != 0) // not identically zero
-            result += std::pow(std::abs(prob[i]), alpha);
+    for (double p : prob)
+        if (std::abs(p) != 0) // not identically zero
+            result += std::pow(std::abs(p), alpha);
 
     return std::log2(result) / (1 - alpha);
 }
@@ -246,9 +246,9 @@ inline double tsallis(const std::vector<double>& prob, double q) {
         return entropy(prob) * std::log(2);
 
     double result = 0;
-    for (idx i = 0; i < prob.size(); ++i)
-        if (std::abs(prob[i]) != 0) // not identically zero
-            result += std::pow(std::abs(prob[i]), q);
+    for (double p : prob)
+        if (std::abs(p) != 0) // not identically zero
+            result += std::pow(std::abs(p), q);
 
     return (result - 1) / (1 - q);
 }
@@ -357,4 +357,4 @@ double qmutualinfo(const Eigen::MatrixBase<Derived>& A,
 
 } /* namespace qpp */
 
-#endif /* ENTROPY_H_ */
+#endif /* ENTROPY_HPP_ */

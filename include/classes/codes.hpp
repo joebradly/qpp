@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/codes.h
+ * \file classes/codes.hpp
  * \brief Quantum error correcting codes
  */
 
-#ifndef CLASSES_CODES_H_
-#define CLASSES_CODES_H_
+#ifndef CLASSES_CODES_HPP_
+#define CLASSES_CODES_HPP_
 
 namespace qpp {
 /**
@@ -64,7 +64,7 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
     /**
      * \brief Default destructor
      */
-    ~Codes() = default;
+    ~Codes() override = default;
 
   public:
     /**
@@ -75,7 +75,7 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
      * \param i Codeword index
      * \return \a i-th codeword  of the code \a type
      */
-    ket codeword(Type type, idx i) const {
+    static ket codeword(Type type, idx i) {
         ket result;
         switch (type) {
             // [[5,1,3]] Five qubit code, as described in Nielsen and Chuang
@@ -163,4 +163,4 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
 
 } /* namespace qpp */
 
-#endif /* CLASSES_CODES_H_ */
+#endif /* CLASSES_CODES_HPP_ */

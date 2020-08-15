@@ -25,12 +25,12 @@
  */
 
 /**
- * \file instruments.h
+ * \file instruments.hpp
  * \brief Measurement functions
  */
 
-#ifndef INSTRUMENTS_H_
-#define INSTRUMENTS_H_
+#ifndef INSTRUMENTS_HPP_
+#define INSTRUMENTS_HPP_
 
 namespace qpp {
 /**
@@ -1004,4 +1004,4 @@ dyn_mat<typename Derived::Scalar> discard(const Eigen::MatrixBase<Derived>& A,
 
 } /* namespace qpp */
 
-#endif /* INSTRUMENTS_H_ */
+#endif /* INSTRUMENTS_HPP_ */

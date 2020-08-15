@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/circuits/engines.h
+ * \file classes/circuits/engines.hpp
  * \brief Qudit quantum engines
  */
 
-#ifndef CLASSES_CIRCUITS_ENGINES_H_
-#define CLASSES_CIRCUITS_ENGINES_H_
+#ifndef CLASSES_CIRCUITS_ENGINES_HPP_
+#define CLASSES_CIRCUITS_ENGINES_HPP_
 
 namespace qpp {
 /**
@@ -177,7 +177,7 @@ class QEngine : public IDisplay, public IJSON {
     /**
      * \brief Default virtual destructor
      */
-    virtual ~QEngine() = default;
+    ~QEngine() override = default;
 
     // getters
     /**
@@ -538,8 +538,8 @@ class QEngine : public IDisplay, public IJSON {
                     st_.dits_[measurements[m_ip].c_reg_] = multiidx2n(
                         resZ, std::vector<idx>(target_rel_pos.size(), d));
                     st_.probs_[measurements[m_ip].c_reg_] = probZ;
-                    for (auto&& elem : measurements[m_ip].target_)
-                        set_measured_(elem);
+                    for (auto&& target : measurements[m_ip].target_)
+                        set_measured_(target);
                     break;
                 case QCircuit::MeasureType::MEASURE_V:
                     std::tie(mres, probs, states) = measure(
@@ -557,8 +557,8 @@ class QEngine : public IDisplay, public IJSON {
                     st_.psi_ = states[mres];
                     st_.dits_[measurements[m_ip].c_reg_] = mres;
                     st_.probs_[measurements[m_ip].c_reg_] = probs[mres];
-                    for (auto&& elem : measurements[m_ip].target_)
-                        set_measured_(elem);
+                    for (auto&& target : measurements[m_ip].target_)
+                        set_measured_(target);
                     break;
                 case QCircuit::MeasureType::MEASURE_Z_ND:
                     std::tie(resZ, probZ, st_.psi_) =
@@ -594,16 +594,14 @@ class QEngine : public IDisplay, public IJSON {
                 case QCircuit::MeasureType::DISCARD_MANY:
                     std::tie(std::ignore, std::ignore, st_.psi_) =
                         measure_seq(st_.psi_, target_rel_pos, d);
-                    for (auto&& elem : measurements[m_ip].target_)
-                        set_measured_(elem);
+                    for (auto&& target : measurements[m_ip].target_)
+                        set_measured_(target);
                     break;
             } // end switch on measurement type
         }     // end else if measurement step
-
         // no-op
         else if (elem.type_ == QCircuit::StepType::NOP) {
         }
-
         // otherwise
         else {
         }
@@ -864,4 +862,4 @@ class QNoisyEngine : public QEngine {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_CIRCUITS_ENGINES_H_ */
+#endif /* CLASSES_CIRCUITS_ENGINES_HPP_ */

@@ -25,14 +25,14 @@
  */
 
 /**
- * \file classes/layouts.h
+ * \file classes/layouts.hpp
  * \see qpp::ILayout
  * \brief Various qudit placement layouts, all must implement the interface
  * \a qpp::ILayout
  */
 
-#ifndef CLASSES_LAYOUTS_H_
-#define CLASSES_LAYOUTS_H_
+#ifndef CLASSES_LAYOUTS_HPP_
+#define CLASSES_LAYOUTS_HPP_
 
 namespace qpp {
 
@@ -89,7 +89,7 @@ class Lattice : public ILayout {
      * \brief Constructor
      * \param dims Vector of lattice dimensions
      */
-    Lattice(const std::vector<idx>& dims) : dims_{dims} {
+    explicit Lattice(const std::vector<idx>& dims) : dims_{dims} {
         // EXCEPTION CHECKS
 
         if (dims.empty())
@@ -104,7 +104,8 @@ class Lattice : public ILayout {
      * \param ds Lattice dimensions
      */
     template <class... Ts>
-    Lattice(Ts... ds) : Lattice(std::vector<idx>{static_cast<idx>(ds)...}) {}
+    explicit Lattice(Ts... ds)
+        : Lattice(std::vector<idx>{static_cast<idx>(ds)...}) {}
 
     /**
      * \brief Computes the index of the point represented by \a xs in the
@@ -203,4 +204,4 @@ class PeriodicBoundaryLattice : public Lattice {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_LAYOUTS_H_ */
+#endif /* CLASSES_LAYOUTS_HPP_ */

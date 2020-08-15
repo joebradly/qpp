@@ -25,12 +25,12 @@
  */
 
 /**
- * \file input_output.h
+ * \file input_output.hpp
  * \brief Input/output functions
  */
 
-#ifndef INPUT_OUTPUT_H_
-#define INPUT_OUTPUT_H_
+#ifndef INPUT_OUTPUT_HPP_
+#define INPUT_OUTPUT_HPP_
 
 namespace qpp {
 /**
@@ -216,4 +216,4 @@ dyn_mat<typename Derived::Scalar> load(const std::string& fname) {
 
 } /* namespace qpp */
 
-#endif /* INPUT_OUTPUT_H_ */
+#endif /* INPUT_OUTPUT_HPP_ */

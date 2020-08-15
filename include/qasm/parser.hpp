@@ -27,12 +27,12 @@
  */
 
 /**
- * \file qasm/parser.h
+ * \file qasm/parser.hpp
  * \brief openQASM 2.0 parsing
  */
 
-#ifndef QASM_PARSER_H_
-#define QASM_PARSER_H_
+#ifndef QASM_PARSER_HPP_
+#define QASM_PARSER_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -900,4 +900,4 @@ class Parser {
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_PARSER_H_ */
+#endif /* QASM_PARSER_HPP_ */

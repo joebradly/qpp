@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/gates.h
+ * \file classes/gates.hpp
  * \brief Quantum gates
  */
 
-#ifndef CLASSES_GATES_H_
-#define CLASSES_GATES_H_
+#ifndef CLASSES_GATES_HPP_
+#define CLASSES_GATES_HPP_
 
 namespace qpp {
 /**
@@ -87,7 +87,7 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
     /**
      * \brief Default destructor
      */
-    ~Gates() = default;
+    ~Gates() override = default;
 
   public:
     // variable gates
@@ -721,7 +721,6 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
                     return "T";
                 else
                     return "";
-                break;
             // 2 qubit gates
             case 4:
                 if (U == CNOT)
@@ -734,7 +733,6 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
                     return "SWAP";
                 else
                     return "";
-                break;
             // 3 qubit gates
             case 8:
                 if (U == TOF)
@@ -743,7 +741,6 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
                     return "FRED";
                 else
                     return "";
-                break;
 
             default:
                 return "";
@@ -754,4 +751,4 @@ class Gates final : public internal::Singleton<const Gates> // const Singleton
 
 } /* namespace qpp */
 
-#endif /* CLASSES_GATES_H_ */
+#endif /* CLASSES_GATES_HPP_ */

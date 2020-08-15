@@ -25,12 +25,12 @@
  */
 
 /**
- * \file statistics.h
+ * \file statistics.hpp
  * \brief Statistics functions
  */
 
-#ifndef STATISTICS_H_
-#define STATISTICS_H_
+#ifndef STATISTICS_HPP_
+#define STATISTICS_HPP_
 
 namespace qpp {
 /**
@@ -236,4 +236,4 @@ cor(const dmat& probXY, const Container& X, const Container& Y,
 
 } /* namespace qpp */
 
-#endif /* STATISTICS_H_ */
+#endif /* STATISTICS_HPP_ */

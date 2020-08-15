@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/timer.h
+ * \file classes/timer.hpp
  * \brief Timing
  */
 
-#ifndef CLASSES_TIMER_H_
-#define CLASSES_TIMER_H_
+#ifndef CLASSES_TIMER_HPP_
+#define CLASSES_TIMER_HPP_
 
 namespace qpp {
 /**
@@ -57,7 +57,7 @@ class Timer : public IDisplay {
     /**
      * \brief Default virtual destructor
      */
-    virtual ~Timer() = default;
+    ~Timer() override = default;
 
     /**
      * \brief Resets the chronometer
@@ -127,4 +127,4 @@ class Timer : public IDisplay {
 
 } /* namespace qpp */
 
-#endif /* CLASSES_TIMER_H_ */
+#endif /* CLASSES_TIMER_HPP_ */

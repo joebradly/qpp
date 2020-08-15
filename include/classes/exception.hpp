@@ -25,12 +25,12 @@
  */
 
 /**
- * \file classes/exception.h
+ * \file classes/exception.hpp
  * \brief Exceptions
  */
 
-#ifndef CLASSES_EXCEPTION1_H_
-#define CLASSES_EXCEPTION1_H_
+#ifndef CLASSES_EXCEPTION_HPP_
+#define CLASSES_EXCEPTION_HPP_
 
 namespace qpp {
 /**
@@ -79,7 +79,7 @@ class Exception : public std::exception {
      *
      * \param where Text representing where the exception occurred
      */
-    explicit Exception(const std::string& where) : where_{where}, msg_{} {}
+    explicit Exception(std::string where) : where_{std::move(where)}, msg_{} {}
 
     /**
      * \brief Overrides std::exception::what()
@@ -591,8 +591,8 @@ class CustomException : public Exception {
     }
 
   public:
-    CustomException(const std::string& where, const std::string& what)
-        : Exception{where}, what_{what} {}
+    CustomException(std::string where, std::string what)
+        : Exception{std::move(where)}, what_{std::move(what)} {}
 };
 
 /**
@@ -675,4 +675,4 @@ class Undeclared : public Exception {
 } /* namespace exception */
 } /* namespace qpp */
 
-#endif /* CLASSES_EXCEPTION1_H_ */
+#endif /* CLASSES_EXCEPTION_HPP_ */

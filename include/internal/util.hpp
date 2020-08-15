@@ -25,12 +25,12 @@
  */
 
 /**
- * \file internal/util.h
+ * \file internal/util.hpp
  * \brief Internal utility functions
  */
 
-#ifndef INTERNAL_UTIL_H_
-#define INTERNAL_UTIL_H_
+#ifndef INTERNAL_UTIL_HPP_
+#define INTERNAL_UTIL_HPP_
 
 namespace qpp {
 /**
@@ -187,7 +187,6 @@ bool check_dims_match_rvect(const std::vector<idx>& dims,
 
     idx proddim = std::accumulate(std::begin(dims), std::end(dims),
                                   static_cast<idx>(1), std::multiplies<idx>());
-    ;
 
     return proddim == static_cast<idx>(A.cols());
 }
@@ -197,11 +196,8 @@ inline bool check_eq_dims(const std::vector<idx>& dims, idx dim) noexcept {
     // error checks only in DEBUG version
     assert(!dims.empty());
 
-    for (idx i : dims)
-        if (i != dim)
-            return false;
-
-    return true;
+    return std::all_of(std::begin(dims), std::end(dims),
+                       [dim](idx i) { return i == dim; });
 }
 
 // check that vector has no duplicates
@@ -483,4 +479,4 @@ struct Display_Impl_ {
 } /* namespace internal */
 } /* namespace qpp */
 
-#endif /* INTERNAL_UTIL_H_ */
+#endif /* INTERNAL_UTIL_HPP_ */

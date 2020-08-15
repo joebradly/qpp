@@ -25,12 +25,12 @@
  */
 
 /**
- * \file types.h
+ * \file types.hpp
  * \brief Type aliases
  */
 
-#ifndef TYPES_H_
-#define TYPES_H_
+#ifndef TYPES_HPP_
+#define TYPES_HPP_
 
 namespace qpp {
 /**
@@ -111,4 +111,4 @@ using qram = std::vector<idx>;
 
 } /* namespace qpp */
 
-#endif /* TYPES_H_ */
+#endif /* TYPES_HPP_ */

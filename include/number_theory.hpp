@@ -25,12 +25,12 @@
  */
 
 /**
- * \file number_theory.h
+ * \file number_theory.hpp
  * \brief Number theory functions
  */
 
-#ifndef NUMBER_THEORY_H_
-#define NUMBER_THEORY_H_
+#ifndef NUMBER_THEORY_HPP_
+#define NUMBER_THEORY_HPP_
 
 namespace qpp {
 /**
@@ -122,7 +122,7 @@ inline bigint gcd(bigint a, bigint b) {
     if (a == 0 || b == 0)
         return (std::max(std::abs(a), std::abs(b)));
 
-    bigint result = 1;
+    bigint result;
     while (b) {
         result = b;
         b = a % result;
@@ -502,7 +502,7 @@ inline bool isprime(bigint p, idx k = 80) {
         return false;
 
     // compute u and r
-    bigint u = 0, r = 1;
+    bigint u = 0, r;
 
     // write n - 1 as 2^u * r
     for (bigint i = p - 1; i % 2 == 0; ++u, i /= 2)
@@ -657,4 +657,4 @@ inline std::vector<std::pair<int, int>> convergents(double x, idx N) {
 
 } /* namespace qpp */
 
-#endif /* NUMBER_THEORY_H_ */
+#endif /* NUMBER_THEORY_HPP_ */

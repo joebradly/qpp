@@ -27,12 +27,12 @@
  */
 
 /**
- * \file qasm/preprocessor.h
+ * \file qasm/preprocessor.hpp
  * \brief Manages includes for openQASM parsing
  */
 
-#ifndef QASM_PREPROCESSOR_H_
-#define QASM_PREPROCESSOR_H_
+#ifndef QASM_PREPROCESSOR_HPP_
+#define QASM_PREPROCESSOR_HPP_
 
 namespace qpp {
 namespace qasm {
@@ -253,4 +253,4 @@ class Preprocessor {
 } /* namespace qasm */
 } /* namespace qpp */
 
-#endif /* QASM_PREPROCESSOR_H_ */
+#endif /* QASM_PREPROCESSOR_HPP_ */
