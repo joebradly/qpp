@@ -1,4 +1,4 @@
-// Qubit teleporation
+// Qubit teleportation
 // Source: ./examples/teleport_qubit.cpp
 #include <iostream>
 #include <tuple>
@@ -10,7 +10,7 @@ int main() {
     // input state
     ket psi_a = randket();
 
-    std::cout << ">> Qubit teleporation\n";
+    std::cout << ">> Qubit teleportation\n";
     std::cout << ">> Initial state:\n" << disp(psi_a) << '\n';
 
     // the entangled resource

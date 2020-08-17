@@ -44,22 +44,24 @@ namespace qpp {
  * of \a x. If there are \a M less than \a N terms in the expansion, a shorter
  * vector with \a M components is returned.
  */
-inline std::vector<int> x2contfrac(double x, idx N, idx cut = 1e5) {
+inline std::vector<bigint> x2contfrac(double x, idx N, idx cut = 100000) {
     // EXCEPTION CHECKS
 
     if (N == 0)
         throw exception::OutOfRange("qpp::x2contfrac()");
     // END EXCEPTION CHECKS
 
-    std::vector<int> result;
+    std::vector<bigint> result;
 
     for (idx i = 0; i < N; ++i) {
         if (x > 0) {
-            result.emplace_back(static_cast<int>(std::llround(std::floor(x))));
+            result.emplace_back(
+                static_cast<bigint>(std::llround(std::floor(x))));
             x = 1 / (x - std::floor(x));
         } else // x < 0
         {
-            result.emplace_back(static_cast<int>(std::llround(std::ceil(x))));
+            result.emplace_back(
+                static_cast<bigint>(std::llround(std::ceil(x))));
             x = 1 / (x - std::ceil(x));
         }
         if (!std::isfinite(x) || std::abs(x) > cut)
@@ -81,7 +83,7 @@ inline std::vector<int> x2contfrac(double x, idx N, idx cut = 1e5) {
  *
  * \return Real representation of the simple continued fraction
  */
-inline double contfrac2x(const std::vector<int>& cf, idx N = idx(-1)) {
+inline double contfrac2x(const std::vector<bigint>& cf, idx N = idx(-1)) {
     // EXCEPTION CHECKS
     if (cf.empty())
         throw exception::ZeroSize("qpp::contfrac2x()");
@@ -94,7 +96,7 @@ inline double contfrac2x(const std::vector<int>& cf, idx N = idx(-1)) {
         N = cf.size();
 
     if (N == 1) // degenerate case, integer
-        return cf[0];
+        return static_cast<double>(cf[0]);
 
     double tmp = 1. / cf[N - 1];
     for (idx i = N - 2; i != 0; --i) {
@@ -594,8 +596,8 @@ inline bigint randprime(bigint a, bigint b, idx N = 1000) {
  * \return Vector of convergents pairs \f$(a_k, b_k)\f$ that approximate the
  * number represented by the continued fraction
  */
-inline std::vector<std::pair<int, int>>
-convergents(const std::vector<int>& cf) {
+inline std::vector<std::pair<bigint, bigint>>
+convergents(const std::vector<bigint>& cf) {
 
     idx N = cf.size();
     // EXCEPTIONS CHECKS
@@ -603,11 +605,11 @@ convergents(const std::vector<int>& cf) {
     if (N == 0)
         throw exception::OutOfRange("qpp::convergents()");
 
-    std::vector<std::pair<int, int>> result(N);
-    int a_minus_one = 1;
-    int b_minus_one = 0;
-    int a_0 = cf[0];
-    int b_0 = 1;
+    std::vector<std::pair<bigint, bigint>> result(N);
+    bigint a_minus_one = 1;
+    bigint b_minus_one = 0;
+    bigint a_0 = cf[0];
+    bigint b_0 = 1;
 
     // END EXCEPTIONS CHECKS
 
@@ -641,7 +643,7 @@ convergents(const std::vector<int>& cf) {
  * \return Vector of convergents pairs \f$(a_k, b_k)\f$ that approximate the
  * number \a x
  */
-inline std::vector<std::pair<int, int>> convergents(double x, idx N) {
+inline std::vector<std::pair<bigint, bigint>> convergents(double x, idx N) {
 
     // EXCEPTIONS CHECKS
 

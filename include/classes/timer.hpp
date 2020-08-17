@@ -92,7 +92,8 @@ class Timer : public IDisplay {
      * instantiation/reset and invocation of qpp::Timer::toc()
      */
     double tics() const noexcept {
-        return std::chrono::duration_cast<T>(end_ - start_).count();
+        return static_cast<double>(
+            std::chrono::duration_cast<T>(end_ - start_).count());
     }
 
     /**

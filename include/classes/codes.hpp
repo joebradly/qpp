@@ -48,8 +48,8 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
      */
     enum class Type {
         FIVE_QUBIT,         ///< [[5,1,3]] qubit code
-        SEVEN_QUBIT_STEANE, ///< [[7,1,3]] Steane qubit code
-        NINE_QUBIT_SHOR,    ///< [[9,1,3]] Shor qubit code
+        STEANE_SEVEN_QUBIT, ///< [[7,1,3]] Steane qubit code
+        SHOR_NINE_QUBIT,    ///< [[9,1,3]] Shor qubit code
     };
 
   private:
@@ -110,7 +110,7 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
                 }
                 break;
             // [[7,1,3]] Steane code, as described in Nielsen and Chuang
-            case Type::SEVEN_QUBIT_STEANE:
+            case Type::STEANE_SEVEN_QUBIT:
                 switch (i) {
                     case 0:
                         result = (mket({0, 0, 0, 0, 0, 0, 0}) +
@@ -140,7 +140,7 @@ class Codes final : public internal::Singleton<const Codes> // const Singleton
                 }
                 break;
             // [[9,1,3]] Shor code
-            case Type::NINE_QUBIT_SHOR:
+            case Type::SHOR_NINE_QUBIT:
                 ket shora = mket({0, 0, 0}) + mket({1, 1, 1});
                 ket shorb = mket({0, 0, 0}) - mket({1, 1, 1});
                 switch (i) {
