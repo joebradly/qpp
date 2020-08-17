@@ -21,7 +21,7 @@ int main() {
         // apply controlled rotations
         for (idx j = 2; j <= n - i; ++j) {
             cmat Rj(2, 2);
-            auto pow_j = static_cast<idx>(std::llround(std::pow(2, j)));
+            idx pow_j = static_cast<idx>(std::llround(std::pow(2, j)));
             Rj << 1, 0, 0, omega(pow_j);
             result = applyCTRL(result, Rj, {i + j - 1}, {i});
             std::cout << "R" << j << "(" << i + j - 1 << ", " << i << ") ";
