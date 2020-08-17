@@ -5,7 +5,7 @@
 
 using namespace qpp;
 
-// Unit testing "classes/timer.h"
+// Unit testing "classes/timer.hpp"
 
 // All test below test std::chrono::steady_clock timers,
 // i.e Timer<T, CLOCK_T = std::chrono::steady_clock>

@@ -6,7 +6,7 @@
 
 using namespace qpp;
 
-// Unit testing "number_theory.h"
+// Unit testing "number_theory.hpp"
 
 /******************************************************************************/
 /// BEGIN std::vector<idx> qpp::compperm(const std::vector<idx>& perm,

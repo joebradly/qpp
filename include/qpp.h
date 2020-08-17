@@ -28,7 +28,7 @@
 // Init, Codes, Gates, States and RandomDevices
 //
 // Any additional singletons should be instantiated here
-// Includes all necessary headers (except "matlab.h")
+// Includes all necessary headers (except "matlab.hpp")
 // ALWAYS include it in main.cpp
 
 /**

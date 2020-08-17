@@ -4,7 +4,7 @@
 
 using namespace qpp;
 
-// Unit testing "random.h"
+// Unit testing "random.hpp"
 
 /******************************************************************************/
 /// BEGIN inline bool qpp::bernoulli(double p = 0.5)

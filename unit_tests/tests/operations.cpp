@@ -5,7 +5,7 @@
 
 using namespace qpp;
 
-// Unit testing "operations.h"
+// Unit testing "operations.hpp"
 
 /******************************************************************************/
 /// BEGIN template <typename Derived1, typename Derived2>

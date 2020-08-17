@@ -7,7 +7,7 @@
 
 using namespace qpp;
 
-// Unit testing "MATLAB/matlab.h"
+// Unit testing "MATLAB/matlab.hpp"
 
 /******************************************************************************/
 /// BEGIN template <typename Derived> dyn_mat<typename Derived::Scalar>
