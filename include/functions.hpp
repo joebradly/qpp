@@ -597,8 +597,8 @@ cmat funm(const Eigen::MatrixBase<Derived>& A, cplx (*f)(const cplx&)) {
     // END EXCEPTION CHECKS
 
     Eigen::ComplexEigenSolver<cmat> es(rA.template cast<cplx>());
-    cmat evects = es.eigenvectors();
-    cmat evals = es.eigenvalues();
+    const cmat& evects = es.eigenvectors();
+    const cmat& evals = es.eigenvalues();
     for (idx i = 0; i < static_cast<idx>(evals.rows()); ++i)
         evals(i) = (*f)(evals(i)); // apply f(x) to each eigenvalue
 

@@ -94,7 +94,7 @@ if (${WITH_MATLAB})
         set(MATLAB_INSTALL_DIR "" CACHE PATH
                 "Custom path to MATLAB installation")
         if (IS_DIRECTORY ${MATLAB_INSTALL_DIR})
-            # MATLAB include files
+            #### MATLAB include files
             set(MATLAB_INCLUDE_DIR "${MATLAB_INSTALL_DIR}/extern/include"
                     CACHE PATH "Custom path to MATLAB include directory")
             if (IS_DIRECTORY ${MATLAB_INCLUDE_DIR})
@@ -103,7 +103,7 @@ if (${WITH_MATLAB})
                 message(FATAL_ERROR
                         "Possibly corrupted MATLAB include headers")
             endif ()
-            # MATLAB linker files
+            #### MATLAB linker files
             if (WIN32)
                 if (MSVC)
                     set(MATLAB_LIB_DIR
@@ -143,21 +143,11 @@ if (${WITH_MATLAB})
 endif ()
 
 #### OpenMP support
-option(WITH_OPENMP "OpenMP support" ON)
-if (${WITH_OPENMP})
-    #### Enable only for GNU gcc or clang >= 3.8
-    if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR
-    (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" AND
-    (NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "3.8")))
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-        #### inject definition (as #define) in the source files
-        add_definitions(-DHAS_OPENMP)
-    else ()
-        message(WARNING "Detected compiler: ${CMAKE_CXX_COMPILER_ID} \
-        ${CMAKE_CXX_COMPILER_VERSION}. Support for OpenMP is enabled only for \
-        the GNU gcc compiler or the clang version 3.8 or higher.")
-    endif ()
-endif ()
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+    #### inject definition (as #define) in the source files
+    add_definitions(-DHAS_OPENMP)
+endif()
 
 #### Google Test
 add_subdirectory(lib/googletest-release-1.10.0)
@@ -166,7 +156,7 @@ add_subdirectory(lib/googletest-release-1.10.0)
 #### Additional flags for GNU gcc and Clang/AppleClang
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID}
         STREQUAL "GNU")
-    # Enable all warnings
+    #### Enable all warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Weffc++")
 endif ()
 

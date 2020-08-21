@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.12)
 project(qpp VERSION 2.4 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -47,7 +47,7 @@ endif ()
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID}
         STREQUAL "GNU")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
-    # Enable all warnings
+    #### Enable all warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Weffc++")
 endif ()
 
@@ -96,7 +96,7 @@ if (${WITH_MATLAB})
         set(MATLAB_INSTALL_DIR "" CACHE PATH
                 "Custom path to MATLAB installation")
         if (IS_DIRECTORY ${MATLAB_INSTALL_DIR})
-            # MATLAB include files
+            #### MATLAB include files
             set(MATLAB_INCLUDE_DIR "${MATLAB_INSTALL_DIR}/extern/include"
                     CACHE PATH "Custom path to MATLAB include directory")
             if (IS_DIRECTORY ${MATLAB_INCLUDE_DIR})
@@ -105,7 +105,7 @@ if (${WITH_MATLAB})
                 message(FATAL_ERROR
                         "Possibly corrupted MATLAB include headers")
             endif ()
-            # MATLAB linker files
+            #### MATLAB linker files
             if (WIN32)
                 if (MSVC)
                     set(MATLAB_LIB_DIR
@@ -145,21 +145,11 @@ if (${WITH_MATLAB})
 endif ()
 
 #### OpenMP support
-option(WITH_OPENMP "OpenMP support" ON)
-if (${WITH_OPENMP})
-    #### Enable only for GNU gcc or clang >= 3.8
-    if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR
-    (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" AND
-    (NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "3.8")))
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-        #### inject definition (as #define) in the source files
-        add_definitions(-DHAS_OPENMP)
-    else ()
-        message(WARNING "Detected compiler: ${CMAKE_CXX_COMPILER_ID} \
-        ${CMAKE_CXX_COMPILER_VERSION}. Support for OpenMP is enabled only for \
-        the GNU gcc compiler or the clang compiler version 3.8 or higher.")
-    endif ()
-endif ()
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+    #### inject definition (as #define) in the source files
+    add_definitions(-DHAS_OPENMP)
+endif()
 
 #### GNU gcc additional debug settings
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
@@ -213,9 +203,8 @@ foreach (FILE ${EXAMPLE_FILES})
     if (TARGET Eigen3::Eigen)
         target_link_libraries(${TARGET_NAME} Eigen3::Eigen)
     endif ()
-    #### OpenMP was enabled
-    if ($WITH_OPENMP$ AND ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang"
-            AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "3.7")
-        target_link_libraries(TARGET_NAME omp)
-    endif ()
+    #### OpenMP was found automatically
+    if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+        target_link_libraries(${TARGET_NAME} OpenMP::OpenMP_CXX)
+    endif()
 endforeach ()

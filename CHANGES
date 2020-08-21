@@ -1,7 +1,9 @@
 Pre-release
-    - Significant improvemment in qpp::QEngine::execute() for multiple
+    - Significant improvements in qpp::QEngine::execute() for multiple
       repetitions
     - Changed all header extensions from .h to .hpp (except for qpp.h)
+    - OpenMP automatic detection by CMake
+    - CMake minimum required version bumped to 3.12 (for OpenMP detection)
 
 Version 2.4 - 13 May 2020
     - Enabled documentation searching by setting SEARCHENGINE = ON in
