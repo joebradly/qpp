@@ -62,6 +62,13 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
     ${CMAKE_CXX_COMPILER_VERSION}. thread_local not supported.")
 endif ()
 
+#### OpenMP support
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+    #### inject definition (as #define) in the source files
+    add_definitions(-DHAS_OPENMP)
+endif()
+
 #### MATLAB support, disabled by default
 option(WITH_MATLAB "MATLAB support" OFF)
 if (${WITH_MATLAB})
@@ -145,13 +152,6 @@ if (${WITH_MATLAB})
         endif ()
     endif ()
 endif ()
-
-#### OpenMP support
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
-    #### inject definition (as #define) in the source files
-    add_definitions(-DHAS_OPENMP)
-endif()
 
 #### Google Test
 add_subdirectory(lib/googletest-release-1.10.0)
