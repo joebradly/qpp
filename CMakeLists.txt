@@ -162,14 +162,14 @@ endif ()
 
 #### GNU gcc additional debug settings
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        ## use the "no-weak" debugging flag only when debugging under OS X,
-        ## as gdb cannot step in template functions when debugging code
-        ## produced by g++
-        ## see http://stackoverflow.com/questions/
-        ## 23330641/gnu-gdb-can-not-step-into-template-functions-os-x-mavericks
-        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-weak")
-    endif ()
+#    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+#        ## use the "no-weak" debugging flag only when debugging under OS X,
+#        ## as gdb cannot step in template functions when debugging code
+#        ## produced by g++
+#        ## see http://stackoverflow.com/questions/
+#        ## 23330641/gnu-gdb-can-not-step-into-template-functions-os-x-mavericks
+#        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-weak")
+#    endif ()
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Og -D_GLIBCXX_DEBUG")
 endif ()
 

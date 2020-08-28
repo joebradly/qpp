@@ -124,7 +124,7 @@ inline bigint gcd(bigint a, bigint b) {
     if (a == 0 || b == 0)
         return (std::max(std::abs(a), std::abs(b)));
 
-    bigint result;
+    bigint result{};
     while (b) {
         result = b;
         b = a % result;
@@ -353,14 +353,14 @@ inline bigint modmul(bigint a, bigint b, bigint p) {
     }
 
     while (ua != 0) {
-        if (ua & 1) {
+        if (ua & static_cast<ubigint>(1)) {
             /* add un to res, modulo p, without overflow */
             /* equiv to if (res + ub >= p), without overflow */
             if (ub >= up - res)
                 res -= up;
             res += ub;
         }
-        ua >>= 1;
+        ua >>= static_cast<ubigint>(1);
 
         /* double b, modulo a */
         temp_b = ub;
