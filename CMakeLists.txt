@@ -42,6 +42,11 @@ else () #### Try to find it automatically
     message(STATUS "Detecting Eigen3 - done (in ${EIGEN3_INCLUDE_DIR})")
 endif ()
 
+### Force clang to use libc++
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif ()
+
 #### Cygwin has issues with std=c++11, use std=gnu++11 instead
 if (CYGWIN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
