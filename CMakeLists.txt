@@ -1,8 +1,8 @@
-if(APPLE)
+if (APPLE)
     cmake_minimum_required(VERSION 3.12)
-else()
+else ()
     cmake_minimum_required(VERSION 3.9)
-endif()
+endif ()
 project(qpp VERSION 2.4 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -71,10 +71,10 @@ endif ()
 
 #### OpenMP support
 find_package(OpenMP)
-if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+if (OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
     #### inject definition (as #define) in the source files
     add_definitions(-DHAS_OPENMP)
-endif()
+endif ()
 
 #### MATLAB support, disabled by default
 option(WITH_MATLAB "MATLAB support" OFF)
@@ -162,14 +162,14 @@ endif ()
 
 #### GNU gcc additional debug settings
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-#    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-#        ## use the "no-weak" debugging flag only when debugging under OS X,
-#        ## as gdb cannot step in template functions when debugging code
-#        ## produced by g++
-#        ## see http://stackoverflow.com/questions/
-#        ## 23330641/gnu-gdb-can-not-step-into-template-functions-os-x-mavericks
-#        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-weak")
-#    endif ()
+    #    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    #        ## use the "no-weak" debugging flag only when debugging under OS X,
+    #        ## as gdb cannot step in template functions when debugging code
+    #        ## produced by g++
+    #        ## see http://stackoverflow.com/questions/
+    #        ## 23330641/gnu-gdb-can-not-step-into-template-functions-os-x-mavericks
+    #        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-weak")
+    #    endif ()
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Og -D_GLIBCXX_DEBUG")
 endif ()
 
@@ -213,7 +213,7 @@ foreach (FILE ${EXAMPLE_FILES})
         target_link_libraries(${TARGET_NAME} Eigen3::Eigen)
     endif ()
     #### OpenMP was found automatically
-    if(OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
+    if (OpenMP_CXX_FOUND AND (OpenMP_CXX_VERSION_MAJOR GREATER_EQUAL 4))
         target_link_libraries(${TARGET_NAME} OpenMP::OpenMP_CXX)
-    endif()
+    endif ()
 endforeach ()
